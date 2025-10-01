@@ -1,0 +1,53 @@
+Let’s see about the things such as null is a primitive but it is give it's type as the object
+Also check why it is printed as object 
+1. let's check about the how JS works
+2. Let's see about how frontend and backend flow works 
+3. let's see abpout how intenet works with the brower
+4. let's see about the callback, well i know about the callback, we have another function in function argumnet 
+5. fact About JS, i mean like there was something about the one data type, i forgot, that about null being as object which is primitive one 
+6. Check about values of NAN
+7. Let's seee about the ECMAScript  and ES6 , ehat the hell is that 
+8. Let's check this one avaScript engine (like V8 in Chrome, SpiderMonkey in Firefox)
+9. Let's see the how execution of react project happens, like which file first runs in the React project
+10  visually understand the JS Execution 
+11. Let's Debiuncing and throughtlying 
+12. calback based API and Promise based API
+13. Micro Task Infinite Loop
+14. Let's see about the this with normal and arrow function
+15. What is Closure and High Order Function
+16. Callback related things , Callback hell and all
+17 what oes it mean by App bootstrapped
+18 Let's see about teh Object.values(val)[0]
+19. Let's check for the Array Question for the interview
+20. Let's see Deep Copy and Shallow Copy
+21. Let's see about the diff loop actual execution like how for of & map , let's also check the loops too
+22. Let's see about the try and catch 
+23. let's see more Array Thory Interview Question
+24. Let's see about the Array.prototype, especially the prototype
+25.  let setOnly = new Set(arr)  Let's see why we need to use the new there  (Done)
+25.1.  console.log("Non Dup DataL: ", [...new Set(Arr31)]);  how does it worked (Done)
+
+26. What is the Infinity 
+27. const FlattedAns=Arr43.toString().split(",").map(Number);    , what is the use of Number
+28. There is something about teh Template Literals, Array Literals, String Literals , is there anything else too 
+29. What is a InterPloation
+30. when we need to return something with the reduce , and when not 
+31. // Let's check teh new question about finding the non repeating chars in the String 
+32. const Arr151=[1,2,3,4,56,6];
+const NewAnsArr=[];
+for(let arr of Arr151) NewAnsArr.push(arr.pop);
+for(let arr of Arr151) console.log(arr);
+console.log("Arr Ans with unshift and pop: ",NewAnsArr)
+Let's see why t is not working 
+33. 
+console.log("Duppliate Values: ", [...Dup1])
+So here does the [...] directly convert the Set to Array 
+
+
+
+
+
+Questions to ask:
+1. what is the difference between normal function and arrow function?
+2. what is difference between argument and parameters?
+3. what is the difference between lexical scope and closure

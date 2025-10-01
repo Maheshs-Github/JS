@@ -1,0 +1,1341 @@
+1. Let's see about the What is JavaSript (7)
+2. Let's see about the Data Typs of JS (96) 
+3. Let's see about the primitive type value can't be changed , but reassign, Also about the Reference type (208)
+4. We’re talking about the three main ways to run JavaScript — in the browser, linked with HTML, and with Node.js — with a clear example for each. (248)
+5. ✅ Variables: var, let, const
+→ Scoping, Hoisting () (363)
+6. Let's see how JS actually executes with one code (503)
+7. let’s dive deep into why hoisting exists in JavaScript, and what’s the actual need for it. (560)
+8. 🟢 The Birth of JavaScript (647)
+9. Explicit and Implicit Conversion (730)
+10. Check about values of NAN (1180)
+11.
+
+
+
+--- Let's see about the What is JavaSript
+What is JavaScript — deep dive (browser-based, “interpreted”, single-threaded)
+Nice — let’s unpack that short line into something you can actually use while coding.
+
+TL;DR
+JavaScript (JS) is a high-level, dynamic language originally built to run in web browsers to control webpages (DOM).
+Modern JS runs in many runtimes (browsers, Node.js, Deno).
+Historically called interpreted, but modern JS engines parse → compile → JIT-optimize code — so it’s not purely interpreted anymore.
+JS is single-threaded at its core (one main thread for executing JS), but it supports concurrency and non-blocking I/O using the event loop, callbacks, Promises, and workers.
+
+1) Runtimes: Browser vs Node (and others)
+Browser runtime: global object is window (or globalThis), provides DOM, BOM, fetch, timers (setTimeout), localStorage, etc. These are Web APIs provided by the browser — they are not part of the JS language itself.
+Node.js runtime: global is global (also globalThis), provides fs, network, process, require/ES modules, high-performance I/O via libuv.
+Deno: a newer runtime like Node with secure defaults and native TypeScript support.
+Key idea: language (syntax + runtime primitives) is JS; environment provides extra APIs.
+
+2) “Interpreted” — what that really means
+Old description: JS is interpreted → run line-by-line at runtime.
+Modern reality: engines (V8, SpiderMonkey, JavaScriptCore) do:
+Parse source → AST.
+Bytecode/intermediate representation.
+JIT compile hot code paths into native machine code for speed.
+So: fast JITted execution, with optimizers and deoptimizers (they speculatively optimize and revert when assumptions break).
+Why it matters: performance characteristics depend on engine behavior (e.g., certain patterns can be deoptimized).
+
+3) Single-threaded + Event Loop (how JS handles async)
+JavaScript executes on a single call stack. But it can do non-blocking I/O because the environment handles async work and pushes callbacks back when ready.
+Simple mental pipeline:
+
+Call Stack  <-- Event Loop <-- (Callback Queue / Microtask Queue) <-- Web APIs / OS
+Example — order of operations (microtask vs macrotask)
+console.log('script start');
+setTimeout(() => console.log('setTimeout'), 0);   // macrotask
+Promise.resolve().then(() => console.log('promise')); // microtask
+console.log('script end');
+Output:
+script start
+script end
+promise
+setTimeout
+Promise.then (microtask) runs before macrotasks like setTimeout once the current stack is empty.
+
+Microtasks vs Macrotasks
+Microtasks: Promise callbacks, queueMicrotask, run right after the current task finishes (before rendering and before macrotasks).
+Macrotasks: setTimeout, setInterval, I/O callbacks, UI events — scheduled to run later.
+
+4) Blocking vs Non-blocking — practical impact
+A long synchronous loop blocks the main thread → UI freezes in browser, other JS waits in Node.
+
+// Blocking
+let sum = 0;
+for (let i=0; i<1e9; i++) sum += i; // this will freeze UI / block the event loop
+Avoid blocking by:
+Breaking work into chunks (setTimeout/requestIdleCallback),
+Using Web Workers (browser) or worker_threads (Node) for CPU-bound tasks,
+Offloading heavy work to servers.
+
+5) Engines, GC and memory model (stack vs heap)
+Stack: function calls, primitive values (references stored here).
+Heap: objects, arrays, functions (actual content lives here).
+Garbage Collector: detects unreachable objects and frees memory — you don’t manage memory manually.
+Reference vs value:
+Primitives are copied by value.
+Objects/arrays copied by reference (variables point to heap address).
+
+6) Security & Browser Constraints
+Browsers isolate JS in a sandbox. Important rules:
+Same-Origin Policy: restricts access across domains unless CORS allows.
+No direct filesystem/network access (unlike Node) — only allowed Web APIs.
+
+7) Why this matters for you (practical rules)
+Understand event loop → avoid surprises in async code.
+Prefer async/await or Promises for readable async code.
+Don’t perform heavy CPU work on main thread (use workers).
+Learn difference between environment APIs vs language features.
+Know how engines JIT so you can write performance-friendly code.
+
+8) Want a tiny demo or visual?
+I can:
+Create a small HTML + JS file that logs event loop order (so you can run in browser)
+Or show a visual memory diagram (stack/heap) and event loop diagram.
+Or give short hands-on exercises (3 problems) to cement the concept.
+
+
+
+
+
+
+
+--- Let's see about the Data Typs of JS
+🔹 What are Data Types in JavaScript?
+In JavaScript, data types define the kind of data a variable can hold — numbers, text, lists, etc.
+
+JS has two categories of data types:
+
+
+🧠 1. Primitive Data Types
+These are immutable (can’t be changed) and stored directly in the stack memory.
+
+Type	   Example	    Description
+Number	 5, 3.14	    Any numeric value
+String	"hello", 'JS'	Sequence of characters
+Boolean	 true, false	Logical values
+null	   null	        Represents intentional empty value
+undefined	undefined	 Variable declared but not assigned
+Symbol	 Symbol('id')	Unique and immutable value (rare)
+BigInt	 1234567890n	For large integers beyond Number
+
+🔍 Examples:
+
+let name = "Mahesh";    // string
+let age = 21;           // number
+let isStudent = true;   // boolean
+let job = null;         // null – intentionally empty
+let address;            // undefined – not assigned
+let bigNum = 123456789123456789n; // BigInt
+
+🔁 Value Copying (Primitive)
+
+let a = 10;
+let b = a;    // b copies value of a
+a = 20;
+console.log(b); // Output: 10 (not affected)
+🔸 They are copied by value, not by reference.
+
+
+
+
+🧠 2. Reference (Non-Primitive) Data Types
+These are mutable and stored in the heap memory.
+Variable stores a reference (address), not the actual value.
+
+Type	Example
+Object	{ name: "Mahesh" }
+Array	[1, 2, 3]
+Function	function() {}
+
+🔍 Examples:
+
+let person = {
+  name: "Mahesh",
+  age: 21
+};
+let nums = [1, 2, 3, 4];
+function greet() {
+  console.log("Hi!");
+}
+
+🔁 Value Copying (Reference)
+let obj1 = { name: "JS" };
+let obj2 = obj1;
+
+obj1.name = "JavaScript";
+console.log(obj2.name); // Output: JavaScript (affected)
+🔸 Reference types are copied by reference, not value.
+Both obj1 and obj2 point to the same memory location.
+
+🔄 🧪 Type Detection Tricks
+✅ Use typeof
+typeof "hello"       // "string"
+typeof 123           // "number"
+typeof true          // "boolean"
+typeof undefined     // "undefined"
+typeof null          // ❗ "object" (quirk in JS)
+typeof [1, 2, 3]     // "object"
+typeof {name: "M"}   // "object"
+typeof function(){}  // "function"
+
+✅ Use Array.isArray()
+Array.isArray([1, 2, 3]); // true
+Array.isArray({});        // false
+
+
+⚠️ Special Case: null is an object?
+typeof null // "object"
+This is a bug in JavaScript's design from the beginning.
+But null is a primitive, not an object. Just remember that.
+
+🔚 Summary Table
+Data Type	Mutable?	Stored In	      Typeof	    Copied By
+Number	  ❌	        Stack       	"number"  	Value
+String	  ❌	        Stack       	"string"  	Value
+Boolean	  ❌	        Stack       	"boolean"	  Value
+Undefined	❌	        Stack       	"undefined"	 Value
+Null	    ❌	        Stack       	"object"   ❗	Value
+Symbol	  ❌	        Stack       	"symbol"  	Value
+BigInt	  ❌	        Stack       	"bigint"  	Value
+Object	  ✅	        Heap	        "object"	  Reference
+Array	    ✅	        Heap	        "object"	  Reference
+Function	✅	        Heap	        "function"	Reference
+
+✅ Let’s Practice:
+Try these and tell me the answers — I’ll correct if needed:
+console.log(typeof NaN);           // ?
+console.log(typeof []);            // ?
+console.log(typeof null);          // ?
+console.log(Array.isArray([]));    // ?
+console.log(typeof (function(){})) // ?
+
+
+
+
+
+--- Let's see about the primitive type value can't be changed , but reassign, Also about the Reference type
+1. Primitive types (Immutable)
+We can reassign the variable itself → point it to a completely new value.
+We cannot change the existing value in memory — that value is frozen forever.
+When we “change” it, what actually happens:
+A new value is created in memory.
+The variable now points to this new value.
+The old value still exists temporarily until garbage collection removes it.
+
+🔍 Example:
+let x = 5;   // x → 5
+x = 10;      // new 10 is created, x now → 10, old 5 may still exist
+2. Reference types (Mutable)
+Variables hold a reference (address) to a value in heap memory.
+You can change the content of the object/array without creating a new reference.
+The variable still points to the same address, but that address now holds different content.
+
+🔍 Example:
+let arr = [1, 2, 3];   // arr → address123 → [1, 2, 3]
+arr[0] = 10;           // same address123 now holds [10, 2, 3]
+✅ The reference didn’t change — only the content at that address changed.
+
+3. Changing the reference itself
+Even for reference types, if you reassign the variable, it will now point to a new object/array.
+
+🔍 Example:
+let arr = [1, 2, 3];   // arr → address123
+arr = [4, 5, 6];       // arr → address456 (new array)
+The old array [1, 2, 3] still exists in memory until garbage collected.
+
+🧠 Quick Mental Model:
+Primitive → value is fixed, reassign = point to a brand-new value.
+Reference → content can be updated without changing the reference, but reassign = new reference.
+
+
+
+
+
+
+---  We’re talking about the three main ways to run JavaScript — in the browser, linked with HTML, and with Node.js — with a clear example for each.
+
+1️⃣ Run in Browser Console
+Best for quick testing or debugging in a live web page.
+Steps:
+Open any website.
+Right-click → Inspect → open Console tab.
+Type:
+console.log("Hello from Browser Console!");
+Press Enter → you’ll see the output right away.
+📌 You can also write small scripts directly in the console:
+let name = "Mahesh";
+console.log(`Welcome, ${name}!`);
+
+
+2️⃣ Run JavaScript Linked with HTML
+Best for learning DOM, interacting with web pages.
+Example:
+
+📂 Folder:
+/project
+ ├─ index.html
+ ├─ script.js
+
+index.html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JS in HTML</title>
+</head>
+<body>
+    <h1>Hello JS!</h1>
+    <script src="script.js"></script>
+</body>
+</html>
+
+script.js
+console.log("JS running through HTML file!");
+alert("This is from JS file!");
+Run:
+Open index.html in a browser → check console (F12 → Console tab) to see output.
+
+📌 Tip:
+Place <script> at the end of <body> or use defer in <head>:
+<script src="script.js" defer></script>
+So it runs after HTML is loaded.
+
+
+
+-- Why we use the defer or place the script tag at the end in aHTML file 
+When to use defer in <script>
+By default:
+<script> without defer blocks HTML parsing — browser stops reading HTML until the JS file is downloaded & executed.
+With defer, HTML parsing continues while the script downloads in the background, and runs after the DOM is ready (before DOMContentLoaded event).
+
+Example without defer (can cause issues)
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="script.js"></script>
+</head>
+<body>
+  <h1 id="title">Hello</h1>
+</body>
+</html>
+
+script.js
+document.getElementById("title").textContent = "Changed!"; 
+❌ If script.js runs before <h1> is parsed, getElementById returns null → error.
+
+Example with defer (safe)
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <h1 id="title">Hello</h1>
+</body>
+</html>
+✅ Here, script runs after HTML is parsed, so DOM elements exist.
+When to use:
+Always for external scripts that depend on DOM elements but don’t need to run before page load.
+Good for performance — prevents render-blocking.
+Not needed for scripts at the very end of <body> (since HTML is already loaded then).
+
+
+
+
+3️⃣ Run with Node.js (Outside Browser)
+Best for learning core JS, backend development, file handling, etc.
+
+Steps:
+Install Node.js from https://nodejs.org
+Open VS Code, create a file index.js
+
+Write:
+console.log("Running in Node.js!");
+Open terminal in VS Code and run:
+node index.js
+Output:
+Running in Node.js!
+🔍 Key Difference
+Method	Where it runs	Can access DOM?	Example use
+Browser Console	Browser	✅	Quick testing
+HTML <script>	Browser	✅	Webpage interaction
+Node.js	Outside browser	❌	Backend, scripting
+
+
+
+
+
+
+---- ✅ Variables: var, let, const
+→ Scoping, Hoisting
+
+1) Overview
+Keyword  	Scope type	    Reassign?	        Redeclare?	Hoisted?	                      Temporal Dead Zone?
+var	      Function scope	✅	              ✅	         ✅ (initialized as undefined)	  ❌
+let	      Block scope	    ✅	              ❌	         ✅ (uninitialized)	            ✅
+const	    Block scope	    ❌ (value fixed)	❌	         ✅ (uninitialized)	             ✅
+
+
+2) Scope Types
+Function scope: Variable is only accessible inside the function where it’s declared.
+Block scope: Variable is accessible only inside the { ... } block where it’s declared.
+
+🔍 Example:
+if (true) {
+    var x = 10;  // function-scoped
+    let y = 20;  // block-scoped
+    const z = 30; // block-scoped
+}
+console.log(x); // ✅ 10
+console.log(y); // ❌ ReferenceError
+console.log(z); // ❌ ReferenceError
+
+
+3) Hoisting
+All variable declarations are moved to the top of their scope during compilation.
+With var → hoisted and initialized to undefined.
+With let/const → hoisted but not initialized → in the Temporal Dead Zone (TDZ) until the declaration line.
+
+🔍 Example:
+console.log(a); // undefined (var is hoisted & initialized)
+var a = 5;
+
+console.log(b); // ❌ ReferenceError (in TDZ)
+let b = 10;
+
+
+4) Temporal Dead Zone (TDZ)
+The phase between entering the scope and declaration execution where let/const exist but are not accessible.
+Accessing them in TDZ → ReferenceError.
+
+🔍 Example:
+{
+    // TDZ for c starts here
+    console.log(c); // ❌ ReferenceError
+    let c = 15;     // TDZ ends here
+    console.log(c); // ✅ 15
+}
+
+
+5) Mutability note for const
+const means the binding (reference) is fixed — the value itself can still be mutable if it’s an object or array.
+
+const arr = [1, 2, 3];
+arr[0] = 99;     // ✅ allowed (content changes)
+arr = [4, 5];    // ❌ TypeError (reference changes)
+
+6) Practical rules
+
+Use const by default → shows intent that variable reference won’t change.
+Use let when you know you’ll reassign.
+Avoid var in modern JS unless dealing with legacy code.
+
+
+
+
+
+Step 1: What hoisting really means
+When JavaScript runs your code, it goes through two phases:
+
+1.Memory Creation Phase (Compilation)
+JS scans your code before execution.
+All variables and functions are stored in memory.
+Functions get stored with their full definition.
+Variables get stored with special placeholders depending on var / let / const.
+
+2.Execution Phase (Running line by line)
+JS assigns values and executes instructions.
+
+
+Step 2: var hoisting behavior
+During memory creation, var is:
+Hoisted (moved to memory)
+Initialized with undefined
+So before your code even starts running, JS already knows var a exists and has undefined as its value.
+
+🔍 Example:
+console.log(a); // undefined
+var a = 5;
+console.log(a); // 5
+
+Behind the scenes:
+// Memory phase
+a = undefined
+
+// Execution phase
+console.log(a); // undefined
+a = 5
+console.log(a); // 5
+
+
+Step 3: let and const hoisting behavior
+These are also hoisted (JS knows they exist during memory creation).
+But they are NOT initialized.
+Until their declaration line is reached, they are in the Temporal Dead Zone (TDZ).
+If you try to access them in TDZ → ReferenceError.
+
+🔍 Example:
+console.log(b); // ❌ ReferenceError
+let b = 10;
+console.log(b); // ✅ 10
+
+Behind the scenes:
+// Memory phase
+b = uninitialized (TDZ)
+// Execution phase
+console.log(b); // ReferenceError (still in TDZ)
+b = 10
+console.log(b); // 10
+
+
+Step 4: TDZ analogy
+Think of TDZ like a "no-touch zone":
+JS has reserved the variable’s name.
+But until you actually declare it in code, you can’t “touch” or use it.
+
+
+✅ Summary Table for Notes:
+
+Keyword	Hoisted?	Initial value before code runs  	Access before declaration
+var	    Yes	      undefined	                       ✅ Works, gives undefined
+let	    Yes	      Uninitialized (TDZ)	             ❌ ReferenceError
+const	  Yes	      Uninitialized (TDZ)	             ❌ ReferenceError
+
+
+
+
+
+--- Let's see how JS actually executes with one code 
+
+How JS “runs” (and why you saw only the last error)
+Modern JS engines don’t execute strictly line-by-line. They do:
+
+Parse/compile phase (before running)
+The engine tokenizes & parses your whole file into an AST.
+If there’s any syntax error, execution never starts.
+You’ll only see that first syntax error (often near the last place the parser got confused).
+
+Execution phase (running code top-to-bottom)
+Now runtime things happen: variable assignments, function calls, etc.
+Errors here are runtime errors (e.g., TypeError, ReferenceError).
+
+So:
+SyntaxError (bad code shape) → raised before any code runs.
+TypeError/ReferenceError from your logic → raised only when that line executes.
+
+Apply this to your snippet
+const Mahesh = 10;
+Mahesh = 20;                  // (A) would throw TypeError at runtime
+
+// console.log("Mahesh: ", Mahesh);
+console.log("Hello");
+// prompt.hello("ljqehf",wjeioye),Hello, Kj  iqe   // (B) if not commented: SyntaxError
+
+
+Case 1: That last line is NOT commented
+It’s invalid syntax (after the function call you have ,Hello, Kj iqe which the parser can’t make sense of).
+The engine hits a SyntaxError during parse, so execution never starts.
+You’ll only see the syntax error; (A) never runs, so you won’t see the constant-reassignment error.
+
+Case 2: That last line is commented (as shown)
+Parse succeeds.
+Execution starts, reaches Mahesh = 20 → TypeError: Assignment to constant variable.
+Execution stops right there, so console.log("Hello") doesn’t run.
+
+Case 3: Move the reassignment after the log
+const Mahesh = 10;
+console.log("Hello");  // prints
+Mahesh = 20;           // then TypeError here, after printing
+
+Why it feels different from Java
+Java does a full compile step and reports many errors before producing a class file.
+JS also parses/compiles, but typically stops at the first syntax error and then runs (JIT), so you often fix errors iteratively: fix one → run again → see next.
+
+Quick rules of thumb
+SyntaxError = “your code can’t even be read” → nothing runs.
+Runtime error = “the code was valid, but this operation is illegal right now” → thrown at that line during execution.
+
+You can try { ... } catch { ... } runtime errors (like the const reassignment), but you cannot catch a SyntaxError with try/catch because parsing happens before execution begins.
+
+
+
+
+
+
+---- let’s dive deep into why hoisting exists in JavaScript, and what’s the actual need for it.
+let’s dive deep into why hoisting exists in JavaScript, and what’s the actual need for it.
+
+🔹 What is Hoisting (recap)
+Hoisting is JavaScript’s behavior of moving declarations (not assignments) to the top of their scope before execution.
+Example:
+console.log(x); // undefined
+var x = 10;
+
+
+Internally JS reads it as:
+var x;       // declaration "hoisted" to top
+console.log(x); // undefined
+x = 10;      // assignment stays in place
+
+🔹 Why Hoisting Exists (The Need)
+Hoisting isn’t a random feature — it comes from how the JavaScript engine works during its two phases:
+
+Memory Creation Phase (Compilation / Creation phase)
+JavaScript scans the code before execution.
+All function declarations and variable declarations (var) are allocated in memory.
+This allows functions and var variables to be accessible before they’re actually written in the code.
+
+Execution Phase
+Code runs line by line.
+Assignments and other logic happen here.
+
+🔹 Practical Reasons for Hoisting
+Convenience for Developer
+Early JS design wanted code to feel flexible and forgiving.
+Example: you can call a function before writing it in code.
+
+greet(); // works!
+function greet() {
+  console.log("Hello!");
+}
+
+
+Helps with Code Organization
+Functions can be placed anywhere in a file, not strictly before usage.
+
+Example: library-style code
+
+// call functions at top
+initApp();
+
+// functions defined later
+function initApp() {
+  loadUser();
+  console.log("App initialized");
+}
+function loadUser() {
+  console.log("User loaded");
+}
+
+
+Historical & Backward Compatibility
+JS was designed in 10 days (literally 😅).
+To make code more forgiving, Brendan Eich (JS creator) allowed declarations to be "seen" before usage.
+Over time, let and const were introduced to fix unintended issues with var hoisting.
+Execution Context Mechanism
+When an execution context is created, JS needs to allocate memory for all identifiers first (functions, variables).
+This inherently creates hoisting because those declarations exist before execution.
+
+🔹 But… Hoisting is Also Dangerous
+
+That’s why let and const don’t behave like var.
+They are hoisted too — but placed in the Temporal Dead Zone (TDZ) until actual initialization.
+console.log(x); // ReferenceError
+let x = 10;
+
+
+So, modern JS discourages relying on hoisting and prefers clear code order.
+
+✅ In short:
+We use (or rather, have) hoisting because of how JS engine prepares code before running. Its need was originally to allow flexible function calls and variable usage before declarations. But modern JS (let, const, strict mode) pushes us to not depend on hoisting anymore.
+
+
+
+
+
+
+
+
+
+---- 🟢 The Birth of JavaScript
+
+Who created it?
+Brendan Eich (an engineer at Netscape) in 1995.
+
+Why?
+At that time, the internet was just becoming popular. Web pages were static (only HTML + CSS). Netscape wanted a scripting language that could make web pages interactive without needing to reload the whole page.
+
+How long did it take?
+Believe it or not, 10 days. Eich created the first version in just 10 days 😲.
+
+Original name:
+First called Mocha, then LiveScript, finally renamed JavaScript for marketing reasons (to ride on Java’s popularity at that time — though Java and JS are very different).
+
+
+🔵 JavaScript’s Execution Nature
+JavaScript is:
+
+Interpreted (line-by-line) — runs directly in the browser.
+Single-threaded — only one task at a time.
+Event-driven & non-blocking — it uses an event loop to handle async tasks (like fetching data, setTimeout, etc.).
+
+👉 Example:
+console.log("Start");
+setTimeout(() => console.log("Async Task"), 1000);
+console.log("End");
+
+
+Output:
+Start
+End
+Async Task
+
+
+Because the async task goes to the callback queue, and the event loop brings it back only after the main stack is empty.
+
+
+
+🔴 Hoisting — Why it Exists
+Now, the part you’re curious about 😃.
+
+Hoisting exists because
+JS needs to scan & understand the code before execution.
+It first creates a memory phase (Execution Context Creation). During this phase, all variable and function declarations are stored in memory.
+Functions → stored completely (so you can call them before they’re defined).
+Variables (var) → initialized as undefined.
+let and const → hoisted too, but kept in a Temporal Dead Zone (you can’t access them before declaration).
+
+Why is it needed?
+Because JS allows you to write code in a more “human-friendly” way — calling functions before they’re declared, using variables above their line of code (with some rules).
+
+👉 Example:
+sayHi(); // works!
+function sayHi() {
+  console.log("Hello Mahesh!");
+}
+
+
+If there was no hoisting, this would throw an error because the function comes after the call.
+
+🟠 The Journey of JS Evolution
+
+1995: Created in Netscape (as LiveScript → JavaScript).
+1996-1997: Standardized as ECMAScript (ES).
+2009: ES5 released (brought JSON, forEach, Object.keys, strict mode).
+2015 (Biggest Update - ES6): Introduced let, const, arrow functions, classes, modules, promises.
+Now: JS keeps evolving with yearly ECMAScript updates (async/await, optional chaining, etc.).
+
+🟡 Why is JavaScript Everywhere Today?
+Runs on every browser (thanks to being the default scripting language).
+With Node.js (2009), JS came to servers too.
+Used in frontend (React, Angular, Vue), backend (Node, Express), mobile apps (React Native), desktop apps (Electron), even AI and IoT.
+Basically: JS is the only language that runs natively in browsers, which is why it became so powerful.
+
+
+
+
+
+
+---- Explicit and Implicit Conversion
+1) Big Picture
+
+Explicit: you ask for a conversion.
+Number("42"), String(123), Boolean(value), BigInt("9007199254740993")
+Implicit: JS converts for you because of the operator/context.
+
+"Age: " + 20 → string
+10 - "2" → number
+if ("") {} → boolean check
+
+
+
+Rule of + in JavaScript:
+If either operand is a string, + does string concatenation.
+If both operands are numbers, + does numeric addition.
+
+Your Example:
+10 + 'A'
+Here, left side = number (10)
+Right side = string ('A')
+👉 Since one side is a string → JavaScript converts the number to a string and concatenates.
+
+Result:
+"10A"
+
+Compare:
+"Age: " + 20   // "Age: 20"  (20 converted to string)
+10 - "2"       // 8          ("2" converted to number)
+10 + "2"       // "102"      (string concatenation, not addition)
+
+So:
+
+With + → string wins (if even one operand is a string).
+With other operators (-, *, /) → number conversion happens.
+⚡ In short: 10 + 'A' → "10A".
+
+
+
+
+
+2) Boolean Conversion
+
+Falsy values (everything else is truthy):
+false, 0, -0, 0n (BigInt zero), "" (empty string), null, undefined, NaN
+
+Boolean("")        // false
+Boolean("hello")   // true
+Boolean(0)         // false
+Boolean(42)        // true
+Boolean([])        // true (non-empty objects/arrays are truthy)
+Boolean({})        // true
+
+
+Explicit: Boolean(x) or !!x
+Implicit: in if (x), &&, ||, ?:, while(x), etc.
+
+
+
+falsy values (only 7 of them in JS):
+These automatically behave as false when converted to Boolean.
+false
+0
+-0
+"" (empty string)
+null
+undefined
+NaN
+👉 Everything else is truthy (non-empty string, numbers other than 0, objects, arrays, functions, etc.).
+
+Explicit vs Implicit Boolean Conversion
+
+Explicit = you manually convert a value to boolean
+Boolean(0)      // false
+Boolean("Hi")   // true
+!!"Hello"       // true   (double negation trick)
+
+Implicit = JS automatically converts when used in places expecting a boolean
+if ("") { 
+  console.log("Runs"); 
+} else { 
+  console.log("Doesn’t run"); 
+}  
+// Output: Doesn’t run, because "" is falsy
+
+Examples in action
+let name = "Mahesh";
+if (name) {
+  console.log("Name is set"); // ✅ runs, because non-empty string is truthy
+}
+
+let age = 0;
+if (age) {
+  console.log("Age exists");
+} else {
+  console.log("No age"); // ✅ runs, because 0 is falsy
+}
+
+console.log("" || "Default");   // "Default" (since "" is falsy)
+console.log("Hi" && "Hello");   // "Hello" (both truthy, returns last one)
+
+
+So in short:
+Falsy values act like false in conditions.
+Truthy values act like true.
+JS does this implicitly in conditions/operators, or you can do it explicitly using Boolean() or !!.
+
+
+
+
+
+
+
+3) Number Conversion
+Explicit
+Number("42")      // 42
+Number("  42 ")   // 42 (trims)
+Number("")        // 0
+Number("42px")    // NaN
+Number(true)      // 1
+Number(false)     // 0
+Number(null)      // 0
+Number(undefined) // NaN
+parseInt("42px", 10)   // 42  (stops at non-digit)
+parseFloat("3.14rad")  // 3.14
+
+
+When to use:
+Number(...) → whole string must be numeric or you get NaN.
+parseInt(str, 10) / parseFloat(str) → extract number prefix (safer for messy inputs). Always pass radix to parseInt.
+
+Implicit
+10 - "2"         // 8   ("2" → 2)
+"6" * "7"        // 42
+"10" - true      // 9   (true → 1)
+"hello" * 2      // NaN
++ "5"            // 5   (unary +)
++true            // 1
++""              // 0
+
+
+Pitfall: You cannot mix BigInt and Number in arithmetic.
+
+1n + 2           // ❌ TypeError
+1n + 2n          // ✅ 3n
+
+
+
+🔹 Converting string to number
+Number("42") → 42 ✅
+Converts the whole string into a number. If the string has anything invalid, the result is NaN.
+Number("42")    // 42
+Number("42px")  // NaN
+Number("3.14")  // 3.14
+
+
+parseInt("42px", 10) → 42
+Reads until it finds a non-digit and stops. Useful when you expect “extra stuff” after the number.
+parseInt("42px", 10)  // 42
+parseInt("3.14", 10)  // 3 (it cuts at decimal)
+
+
+parseFloat("3.14rad") → 3.14
+Same as parseInt but works for decimals.
+parseFloat("3.14rad") // 3.14
+
+
+👉 So:
+Use Number() if you expect a clean number string ("42", "3.14").
+Use parseInt()/parseFloat() if the string might contain units or extra text ("42px", "3.14rad").
+
+🔹 Converting number to string
+String(42) → "42"
+42..toString() → "42"
+(Need the .. if the number is written literally, so JS doesn’t confuse it with a decimal point.)
+Both are fine, but String(x) is safer when the value might be null or undefined.
+String(null)      // "null"
+(null).toString() // ❌ error
+
+
+⚡ So in short:
+Clean number string → Number().
+Messy number string (like "42px") → parseInt() or parseFloat().
+To string → String() is safest.
+
+🔹 Converting string to number
+Number("42") → 42 ✅
+Converts the whole string into a number. If the string has anything invalid, the result is NaN.
+
+Number("42")    // 42
+Number("42px")  // NaN
+Number("3.14")  // 3.14
+
+parseInt("42px", 10) → 42
+Reads until it finds a non-digit and stops. Useful when you expect “extra stuff” after the number.
+
+parseInt("42px", 10)  // 42
+parseInt("3.14", 10)  // 3 (it cuts at decimal)
+
+parseFloat("3.14rad") → 3.14
+Same as parseInt but works for decimals.
+
+parseFloat("3.14rad") // 3.14
+
+
+👉 So:
+Use Number() if you expect a clean number string ("42", "3.14").
+Use parseInt()/parseFloat() if the string might contain units or extra text ("42px", "3.14rad").
+🔹 Converting number to string
+
+String(42) → "42"
+42..toString() → "42"
+(Need the .. if the number is written literally, so JS doesn’t confuse it with a decimal point.)
+
+Both are fine, but String(x) is safer when the value might be null or undefined.
+String(null)      // "null"
+(null).toString() // ❌ error
+
+
+⚡ So in short:
+Clean number string → Number().
+Messy number string (like "42px") → parseInt() or parseFloat().
+To string → String() is safest.
+
+
+
+
+4) String Conversion
+Explicit
+String(123)            // "123"
+String(true)           // "true"
+String(null)           // "null"
+String(undefined)      // "undefined"
+(123).toString()       // "123"
+
+Implicit
+"Age: " + 20           // "Age: 20"
+`Hello ${42}`          // "Hello 42" (template literal → ToString)
+[1,2,3] + ""           // "1,2,3"
+({a:1}) + ""           // "[object Object]"
+
+
+
+
+Addition vs others:
++ does string concatenation if either operand is a string.
+- * / % always go numeric, so they coerce operands to numbers.
+
+
+When you do something like:
+console.log("Age: " + 20);
+👉 JavaScript converts 20 (a number) into a string automatically → "20"
+so result = "Age: 20"
+
+Same with template literals:
+console.log(`Hello ${42}`);
+👉 Inside ${}, JS calls ToString(42) → "42"
+so result = "Hello 42"
+
+In short:
++ with a string → forces string conversion of the other operand.
+Template literals ${expr} → also force string conversion.
+⚡ That’s why we see numbers, null, undefined, objects, etc. as strings when printed this
+
+
+If age is a number
+let age = 25;
+console.log("1 " + age); // "1 25"
+
+console.log(1 + age);   // 26
+But because you put "1 " (string with space), it forces string concatenation.
+
+⚡Short trick:
+If one side is string, + → concatenation.
+If both are numbers, + → addition.
+
+
+
+
+
+
+5) Loose vs Strict Equality
+
+=== → no type conversion (best practice).
+== → allows coercion (dangerous but has one useful idiom).
+
+0 == false         // true
+"" == 0            // true
+"0" == 0           // true
+null == undefined  // true  (special case)
+[] == ""           // true  ([] → "" → 0? careful!)
+[] == 0            // true
+[0] == 0           // true
+
+
+Recommendation:
+Prefer === always.
+Only use == for x == null to check “null or undefined”.
+if (x == null) { /* handles null or undefined */ }
+
+
+Normally, == (loose equality) is risky because it does type coercion — it tries to convert the operands into the same type before comparison. That can lead to unexpected results:
+0 == false   // true
+"" == false  // true
+null == 0    // false
+undefined == false // false
+
+That’s why === (strict equality, no coercion) is the safe choice in most cases.
+
+
+1. What you thought:
+You’re right that undefined, null, 0, and false are all falsy values in JavaScript.
+👉 But “falsy” just means: when converted to a boolean in an if statement, they behave like false.
+
+Example:
+if (0) console.log("truthy"); else console.log("falsy"); // falsy
+if (null) console.log("truthy"); else console.log("falsy"); // falsy
+if (undefined) console.log("truthy"); else console.log("falsy"); // falsy
+
+So yes, all are falsy in boolean context. ✅
+2. Why null == 0 is false
+== (loose equality) has special coercion rules:
+null is only equal to undefined (not to 0, false, "", etc.).
+
+So:
+null == undefined   // true
+null == 0           // false ❌
+
+3. Why undefined == false is false
+undefined doesn’t get coerced to false in ==.
+Rule: undefined is only equal to null.
+undefined == null   // true
+undefined == false  // false ❌
+
+4. Difference between falsy and equality
+Falsy: works in boolean contexts (if, while, ||, &&).
+Equality (==): follows specific coercion rules, not just “falsy-ness.”
+Example:
+console.log(Boolean(undefined)); // false
+console.log(Boolean(null));      // false
+console.log(Boolean(0));         // false
+console.log(undefined == false); // false
+console.log(null == 0);          // false
+console.log(0 == false);         // true ✅ (because 0 is coerced to false)
+
+
+👉 So the idiom here:
+null and undefined are a “pair” (they only equal each other).
+Other falsy values (0, "", false, NaN) don’t equal them with ==.
+
+Exactly 👍
+null == undefined → ✅ true (because == does type-coercion).
+But null === undefined → ❌ false (because === checks type + value).
+So:
+👉 Using value == null is a shorthand to check both null and undefined.
+👉 If you use ===, you must write both checks (value === null || value === undefined).
+That’s why devs often use the idiom if (value == null) { … }.
+
+
+
+
+
+
+6) Objects/Arrays → Primitives (the real “why” behind weird results)
+
+When JS needs a primitive (number/string) from an object, it calls ToPrimitive:
+
+If a string is preferred (rare; e.g., Date), try toString() then valueOf().
+
+Otherwise (number preferred), try valueOf() then toString().
+
+let obj = { valueOf() { return 7; } };
+obj + 1          // 8  (number hint → valueOf() used)
+
+let arr = [1,2,3];
+String(arr)      // "1,2,3"  (array toString joins by commas)
+
+let date = new Date(0);
+String(date)     // "Thu, 01 Jan 1970 ..." (Date prefers string)
++date            // 0  (numeric hint → valueOf used)
+
+
+You can override with Symbol.toPrimitive:
+
+let user = {
+  [Symbol.toPrimitive](hint) {
+    return hint === "string" ? "Mahesh" : 100;
+  }
+};
+`${user}`   // "Mahesh"
++user       // 100
+
+
+
+
+
+7) Symbol & BigInt gotchas
+String(Symbol("id"))  // "Symbol(id)"  (explicit OK)
+"" + Symbol()         // ❌ TypeError (implicit to string is not allowed)
+
+BigInt(42)            // 42n
+BigInt("42")          // 42n
+Number(42n)           // 42  (explicit)
+42n + 8               // ❌ TypeError (can’t mix)
+42n + 8n              // ✅ 50n
+
+
+
+
+
+
+8) Common Pitfalls (and how to avoid)
+
+"5" + 1 → "51" (string wins). Use Number("5") + 1 if you want 6.
+
+parseInt("08") is fine today, but always pass radix: parseInt("08", 10).
+
+Number("") → 0. If you don’t want that, guard against empty strings first.
+
+Boolean([]) and Boolean({}) are true. Don’t use if (arr) to test non-emptiness; use if (arr.length).
+
+Don’t rely on == quirks. Use === and explicit conversions.
+
+
+
+
+
+9) Quick Cheat Tables
+A) To Number (selected)
+Input	Result
+"42"	42
+" 42 "	42
+""	0
+"42px"	NaN
+true/false	1 / 0
+null	0
+undefined	NaN
+B) To Boolean
+Input	Result
+"", 0, -0	false
+0n, NaN	false
+null, undefined	false
+Everything else	true
+
+
+
+
+
+
+
+---- 1. What is NaN and it's value?
+
+NaN stands for Not-a-Number.
+It is a special numeric value in JavaScript that represents an invalid number result.
+Even though it says "Not a Number," it is still of type number!
+console.log(typeof NaN); // "number"
+
+2. Example:
+Number("abc");      // NaN  (cannot convert "abc" to number)
+Number(undefined);  // NaN
+0 / 0;              // NaN
+Math.sqrt(-1);      // NaN
+
+3. Does NaN have a value?
+👉 Yes, but it's only itself.
+It doesn’t represent like 3 or 10.
+It is a special constant in JavaScript.
+
+console.log(NaN === NaN); // false  (NaN is never equal to itself)
+console.log(Object.is(NaN, NaN)); // true (this is the correct way to check)
+
+
+So, NaN is not like a number 3, it’s more like a signal that "this is an invalid number result."
+
+4. How to check NaN?
+Use isNaN() or Number.isNaN()
+console.log(isNaN(NaN)); // true
+console.log(isNaN("abc")); // true  (old isNaN is loose)
+console.log(Number.isNaN("abc")); // false
+console.log(Number.isNaN(NaN));   // true
+
+
+👉 In short:
+NaN is a special number value meaning "invalid number."
+It’s not equal to anything (not even itself).
+Use Number.isNaN() to check.
+
+
+
+
+
+
+----   ⚡ Strange & Fun JavaScript Facts
+
+
+0.typeof null === "object"
+Yep, null is primitive, but typeof lies and says "object".
+Reason: Legacy bug from the very first JS version in 1995, but it stayed forever for backward compatibility.
+
+
+
+1.NaN is a Number 🤯
+typeof NaN; // "number"
+
+"Not-a-Number" is actually a special numeric value used to represent invalid math operations.
+
+
+
+2.[] + [] = "" (empty string)
+
+[] + []; // ""
+Both arrays get converted to strings → "" + "" = "".
+
+
+
+3.[] + {} vs {} + [] give different results
+
+[] + {}; // "[object Object]"
+{} + []; // 0
+Why? Because in the second case, {} is treated as a block, not an object literal. JS quirks 😅
+
+
+
+4.true + true = 2
+true + true; // 2
+Boolean gets converted → 1 + 1 = 2.
+Here’s why true becomes 1 (and not something else):
+
+In JavaScript type coercion, when a boolean is converted to a number, the spec defines:
+true → 1
+false → 0
+
+That’s it. It’s not about “other values” — it’s a fixed rule in the ECMAScript specification.
+So:
+true + true   // 2
+true + false  // 1
+false + false // 0
+
+The reasoning: Booleans are meant to be logical (true/false), but when you try to use them in an arithmetic context, JS has to force them into numbers. And the only natural mapping is true = 1 (exists/yes/on) and false = 0 (none/no/off).
+
+👉 That’s why it’s not like "true" → some other value — JS doesn’t guess, it just follows this strict mapping.
+
+⚡ Fun extra fact:
+Number(true)  // 1
+Number(false) // 0
+
+So it’s always 1 or 0.
+
+
+
+
+5.Floating-point Madness
+
+0.1 + 0.2 === 0.3; // false
+Because JS uses binary floating-point numbers (IEEE 754), so results aren’t perfectly precise.
+
+This isn’t just a JavaScript thing, it happens in Java, Python, C, etc. because all of them (by default) use IEEE 754 binary floating-point representation for decimal numbers.
+
+👉 Example in Java:
+public class Main {
+    public static void main(String[] args) {
+        double a = 0.1;
+        double b = 0.2;
+        double c = 0.3;
+
+        System.out.println(a + b == c); // false
+        System.out.println(a + b);      // 0.30000000000000004
+    }
+}
+
+
+Why?
+Decimal numbers like 0.1 or 0.2 can’t be represented exactly in binary.
+They are stored as repeating fractions (like 1/3 = 0.333... in decimal).
+So when you add 0.1 + 0.2, you don’t get exactly 0.3, but something very close (0.30000000000000004).
+That’s why floating-point precision errors happen in both JS and Java.
+
+💡 Pro tip:
+If you ever want to compare floats, use a tolerance/epsilon instead of ==:
+double epsilon = 1e-9;
+System.out.println(Math.abs((a + b) - c) < epsilon); // true
+
+
+
+7.[] == ![] is true 😲
+
+[] == ![]; // true
+Because ![] → false → 0, and [] also becomes 0 when coerced.
+
+
+
+8.Function can have properties like an object
+function hi() {}
+hi.wow = "🔥";
+console.log(hi.wow); // "🔥"
+
+Functions are objects in JS, so they can have keys/values!
+
+
+
+9.+[] equals 0
+
++[]; // 0
+Empty array converts to empty string "" → then to number → 0.
+
+
+
+10.JavaScript has only one number type → Number
+Unlike other languages, JS doesn’t have int, float, double. Everything (except BigInt) is just Number.
+
+
