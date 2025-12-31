@@ -42,6 +42,7 @@ Let's see why t is not working
 33. 
 console.log("Duppliate Values: ", [...Dup1])
 So here does the [...] directly convert the Set to Array 
+34. So basically what is the 
 
 
 
@@ -51,3 +52,10 @@ Questions to ask:
 1. what is the difference between normal function and arrow function?
 2. what is difference between argument and parameters?
 3. what is the difference between lexical scope and closure
+
+
+
+
+
+New Questions from Revision 
+1. Let's see about diff console method which we useful in the practical use 
