@@ -59,3 +59,6 @@ Questions to ask:
 
 New Questions from Revision 
 1. Let's see about diff console method which we useful in the practical use 
+2. what is a documnet , window , etc 
+3. Rest & Spread
+5. diff in async await & prmosises 

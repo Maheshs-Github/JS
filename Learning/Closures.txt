@@ -230,6 +230,31 @@ Perfect 👍 Let’s carefully **differentiate lexical scope and closure** in si
 
 ---
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### 🔹 **Closure**
 
 * Definition: *Closure is created when a function **remembers and uses variables from its outer scope**, even after that outer function has already finished executing.*

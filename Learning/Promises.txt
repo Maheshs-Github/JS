@@ -284,7 +284,7 @@ else reject("Task failed!");
 ---
 
 3. **.then() / .catch()**
-
+rr
 ```js
 myPromise
   .then(result => console.log(result))

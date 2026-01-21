@@ -11,7 +11,7 @@
 11. Let's see about the Callbacks and the IIFE (1309)
 12. this way of writing the IIFE is similar to the useEffcet and IIFE (1563)
 13. Let's understand what is mean by useEffect values are private not Accessible outside , compare it with normal function (1658)
-
+14. WHat is a window & document object (1762)
 
 
 
@@ -1742,3 +1742,121 @@ The *main difference* is **control over execution** —
 ---
 
 Would you like me to also connect this difference to why `useEffect` feels a bit like an IIFE in React? That might make the link clearer.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---- ✅ What is `window` & document?
+
+> **`window` is the global object of the browser.**
+> It represents the **browser window/tab**.
+
+* It is part of the **BOM (Browser Object Model)**
+* All global variables & functions become properties of `window`
+
+Example:
+
+```js
+var a = 10;
+console.log(window.a); // 10
+```
+
+Common `window` properties:
+
+* `window.alert()`
+* `window.location`
+* `window.history`
+* `window.navigator`
+* `window.setTimeout()`
+
+---
+
+## ✅ What is `document`?
+
+> **`document` represents the HTML page loaded inside the browser window.**
+
+* It is part of the **DOM (Document Object Model)**
+* Used to access and manipulate HTML elements
+
+Example:
+
+```js
+document.getElementById("title").innerText = "Hello";
+```
+
+---
+
+## Relationship between `window` and `document`
+
+```text
+window
+ └── document
+      └── HTML elements
+```
+
+👉 `document` is a **property of `window`**
+
+```js
+window.document === document; // true
+```
+
+---
+
+## Key differences (Interview Table)
+
+| Feature    | `window`           | `document`                  |
+| ---------- | ------------------ | --------------------------- |
+| Represents | Browser window/tab | Web page (HTML)             |
+| Model      | BOM                | DOM                         |
+| Controls   | Browser features   | Page content                |
+| Example    | `window.location`  | `document.getElementById()` |
+
+---
+
+## Interview-ready one-liner
+
+> **`window` is the global browser object, while `document` represents the HTML content inside that window.**
+
+---
+
+## One-line memory trick 🧠
+
+> **Window = browser, Document = webpage**
+
+---
+
+## Common interview trap ⚠️
+
+```js
+console.log(this === window); // true (in browser)
+```
+
+But:
+
+```js
+console.log(this === document); // false
+```
+
+---
+
+If you want next:
+
+* ❓ DOM vs BOM
+* ❓ `document.ready` vs `window.onload`
+* ❓ Global variables & window
+* ❓ Browser vs Node.js differences
+
+Just say 👍

@@ -1,0 +1,3653 @@
+1.What is JavaScript? and where it is used, what is dynamically typed ?, Does JS do the Realod the Page When updating the content,  Does “High-level language” mean close to human language? (50)
+2. What are teh different data types in JS? (Refer Basics.txt)
+3. About the var, let, const (Refer Basics.txt)
+4. diff btw null & undefined (229)
+5. What is Nan in JS (329)
+6. What is **Coercion** in JavaScript? (423)
+7. What is a hoisting? (Refer to the Basics.txt)
+8. What are truthy & falsy values (612)
+9. what is the use of typeof? (731)
+10. What is Scope in JS? (816)
+11. What is a Block Scope? (935)
+12. What is **Lexical Scope? (1029)
+13. What is a **Closure** in JavaScript? (1114)
+14. What is an **Execution Context? (1224)
+15. What is the **Call Stack**? (1365)
+16. What is a Function Expression & Function Declaration? (Refer to the Function.txt)
+17. What is Arrow function? (Refer to the Function.txt)
+18. how is this keyword is used in JS? (1467)
+19. What is an IIEF & What is a Callback? (Refer to the Function.txt)
+20. What is the Synchronous JavaScript & Asynchronous JavaScript (1606)
+21. What is setTimeout & setInternval (1755)
+22. What is a Promise (1844)
+23. what are the states of prmise (1936)
+24. Let's see about the Callback, Promise chaining & async Await (2005)
+25. what is a Event Loop? (Refer How JS Works?)
+26. what is a microtask and macrotask (Refer How JS Works?)
+27. what is a DOM? (2128)
+28. what is BOM & CSSOM? (2218)
+29. what is a window & document (2332)
+30. Difference between **HTML** and **DOM** (2434)
+31. what is getElementById & querySelector (2529)
+32.  What is **Event Bubbling**? (2637)
+33. What is **Event Capturing**? (2730)
+34. What is **Event Delegation**? (2848)
+35. How to stop the browser default behavior (2969)
+36. What is a Diff btw innerHTML,innerText,textContent (3068)
+37. What is a localstorage (3281)
+38. WHat is a Session Storage (3388)
+39. WHta is diff btw localStorage And sessionStorage (3424)
+40.🍪 Cookies vs 🗂️ localStorage vs 🧭 sessionStorage (3553)
+
+
+
+
+
+
+
+
+## ✅ What is JavaScript? and where it is used, what is dynamically typed ?, Does JS do the Realod the Page When updating the content,  Does “High-level language” mean close to human language?
+
+**JavaScript (JS)** is a **high-level, interpreted, dynamically typed programming language** used to make web pages **interactive and dynamic**.
+
+It allows developers to:
+
+* Handle user actions (clicks, input, scroll)
+* Update content without reloading the page
+* Communicate with servers
+* Build full applications (frontend + backend)
+
+👉 Today, JavaScript is **not limited to browsers**.
+
+---
+
+## ✅ Where is JavaScript used?
+
+### 1️⃣ Frontend (Browser)
+
+Used to create interactive UI:
+
+* Form validation
+* Animations
+* Dynamic content updates
+
+**Examples:** React, Angular, Vue
+
+---
+
+### 2️⃣ Backend (Server-side)
+
+With **Node.js**, JavaScript runs on servers:
+
+* APIs
+* Authentication
+* Database operations
+
+**Examples:** Express.js, NestJS
+
+---
+
+### 3️⃣ Full-Stack Development
+
+Same language for:
+
+* Frontend
+* Backend
+* Logic sharing
+
+👉 Very popular in MERN stack
+
+---
+
+### 4️⃣ Mobile Applications
+
+Used to build cross-platform apps:
+
+* Android
+* iOS
+
+**Examples:** React Native, Ionic
+
+---
+
+### 5️⃣ Desktop Applications
+
+Used to build desktop apps:
+
+* Windows
+* macOS
+* Linux
+
+**Examples:** Electron.js
+
+---
+
+### 6️⃣ Other Areas
+
+* Game development
+* Browser extensions
+* IoT applications
+* Cloud & serverless functions
+
+---
+
+
+
++++ ✅ What does Dynamically Typed mean?
+
+A dynamically typed language is a language where you do NOT need to specify the data type of a variable, and the type is decided at runtime.
+
+In simple words:
+👉 JavaScript decides the type automatically when the code runs.
+
+Simple example (JavaScript)
+let x = 10;       // x is a Number
+x = "Hello";     // now x is a String
+x = true;        // now x is a Boolean
+
+
+✔ No error
+✔ Type changes at runtime
+➡️ This is dynamic typing
+
+Why this is called “dynamic”?
+
+Because:
+
+The type is not fixed
+
+It can change dynamically
+
+Checked during execution, not before
+
+
+
+
++++ JavaScript DOES update content without reloading the page.
+React just makes it easier, structured, and more efficient.
+
+What actually updates the page?
+✅ Plain JavaScript can do this
+
+Using DOM manipulation and AJAX / Fetch, JS can update parts of the page without a full reload.
+
+Example (plain JS):
+
+document.getElementById("title").innerText = "Updated!";
+
+
+or fetching data:
+
+fetch("/api/data")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("msg").innerText = data.text;
+  });
+
+
+➡️ No page reload happens
+
+So ❌ it is not true that JS cannot do this.
+
+What React adds on top of JavaScript
+
+React is built on JavaScript, not a replacement.
+
+React gives:
+
+Component-based structure
+
+State-driven UI
+
+Virtual DOM (efficient updates)
+
+Cleaner, maintainable code
+
+
+
+
+
+✅ Does “High-level language” mean close to human language?
+
+Yes — but not plain English.
+
+A high-level language is a programming language that is closer to human thinking and understanding than machine code.
+
+It focuses on:
+
+Readability
+
+Abstraction
+
+Ease of writing & understanding code
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
++++++  ✅ Difference between `null` and `undefined` in JavaScript
+
+### 🔹 `undefined`
+
+> Means **a variable has been declared but not assigned any value**.
+
+```js
+let x;
+console.log(x); // undefined
+```
+
+**Common cases:**
+
+* Variable declared but not initialized
+* Function with no return value
+* Missing function arguments
+* Accessing non-existing object property
+
+```js
+function test() {}
+console.log(test()); // undefined
+```
+
+---
+
+### 🔹 `null`
+
+> Means **intentional absence of a value** (assigned by developer).
+
+```js
+let y = null;
+```
+
+Used when:
+
+* You want to explicitly clear a value
+* You want to say “this has no value on purpose”
+
+---
+
+## 🔍 Key Differences (Interview Table)
+
+| Feature         | `undefined`        | `null`                 |
+| --------------- | ------------------ | ---------------------- |
+| Who assigns it  | JavaScript         | Developer              |
+| Meaning         | Value not assigned | No value intentionally |
+| Type (`typeof`) | `"undefined"`      | `"object"` ❗           |
+| Default value   | Yes                | No                     |
+
+---
+
+## ⚠️ Tricky Interview Point (IMPORTANT)
+
+```js
+typeof null;      // "object"  ❗ (JS bug)
+typeof undefined; // "undefined"
+```
+
+And:
+
+```js
+null == undefined   // true
+null === undefined  // false
+```
+
+---
+
+## 🧠 Interview-ready one-liner
+
+> **`undefined` means a variable exists but has no value assigned, whereas `null` represents an intentional absence of value.**
+
+---
+
+## Real-world analogy 🧩
+
+* `undefined` → You asked for a file, but it was never created
+* `null` → File exists, but it is intentionally empty
+
+
+
+
+
+
+
+
+
+
+
+
+
++++++ ✅ What is `NaN` in JavaScript?
+
+> **`NaN` stands for “Not a Number”.**
+> It is a **special numeric value** that represents the result of an **invalid or undefined mathematical operation**.
+
+---
+
+## Common examples
+
+```js
+Number("abc");   // NaN
+0 / 0;           // NaN
+Math.sqrt(-1);   // NaN
+```
+
+Even though it says *Not a Number*:
+
+```js
+typeof NaN; // "number" ❗
+```
+
+---
+
+## Important weird behavior (INTERVIEW FAVORITE ⚠️)
+
+### 1️⃣ `NaN` is NOT equal to itself
+
+```js
+NaN === NaN; // false
+NaN == NaN;  // false
+```
+
+### 2️⃣ Correct way to check `NaN`
+
+```js
+Number.isNaN(NaN); // true
+```
+
+❌ Avoid:
+
+```js
+isNaN("abc"); // true (type coercion confusion)
+```
+
+---
+
+## Why `isNaN()` is tricky
+
+```js
+isNaN("123");   // false
+isNaN("abc");   // true ❗
+```
+
+Because it **converts to number first**.
+
+✔ Safer:
+
+```js
+Number.isNaN("abc"); // false
+```
+
+---
+
+## Interview-ready definition
+
+> **`NaN` is a special numeric value that indicates an invalid number result in JavaScript.**
+
+---
+
+## Difference from `undefined` & `null`
+
+| Value       | Meaning                |
+| ----------- | ---------------------- |
+| `NaN`       | Invalid number         |
+| `undefined` | No value assigned      |
+| `null`      | Intentionally no value |
+
+---
+
+## One-line memory trick 🧠
+
+> **NaN means “I tried to calculate, but the result is invalid.”**
+
+
+
+
+
+
+
+
+
+
+
+
++++++ ✅ What is **Coercion** in JavaScript?
+
+> **Type coercion** is JavaScript’s automatic process of **converting one data type into another** when performing operations.
+
+In short:
+👉 **JavaScript changes the type for you automatically.**
+
+---
+
+## Simple example
+
+```js
+"5" + 1   // "51"
+```
+
+Why?
+
+* `1` is coerced into `"1"`
+* String concatenation happens
+
+---
+
+## Another example
+
+```js
+"5" - 1   // 4
+```
+
+Why?
+
+* `"5"` is coerced into number `5`
+* Numeric subtraction happens
+
+---
+
+## Where coercion happens most
+
+### 1️⃣ Arithmetic operations
+
+```js
+"10" * 2  // 20
+"10" / 2  // 5
+```
+
+### 2️⃣ Comparison (`==`)
+
+```js
+"5" == 5      // true
+null == undefined // true
+```
+
+### 3️⃣ Boolean context
+
+```js
+if ("hello") { }  // true
+if (0) { }        // false
+```
+
+---
+
+## Implicit vs Explicit coercion
+
+### 🔹 Implicit (Automatic)
+
+```js
+"5" == 5
+```
+
+### 🔹 Explicit (Manual)
+
+```js
+Number("5")
+String(10)
+Boolean(1)
+```
+
+---
+
+## Interview warning ⚠️
+
+❌ Loose comparison (`==`) uses coercion
+✅ Strict comparison (`===`) does NOT
+
+```js
+"5" === 5  // false
+```
+
+---
+
+## Interview-ready definition
+
+> **Type coercion is JavaScript’s automatic conversion of values from one data type to another during operations.**
+
+---
+
+## One-line memory trick 🧠
+
+> **Coercion = JavaScript silently changing types**
+
+
+
+
+
+
+
+
+
+
+
+
++++++ Difference between `==` and `===` in JavaScript?
+
+### 🔹 `==` (Loose Equality)
+
+> Compares **values only**
+> Performs **type coercion**
+
+```js
+"5" == 5   // true
+```
+
+JS converts `"5"` → `5` before comparison.
+
+---
+
+### 🔹 `===` (Strict Equality)
+
+> Compares **value AND type**
+> ❌ No type coercion
+
+```js
+"5" === 5  // false
+```
+
+---
+
+## Side-by-side comparison
+
+| Feature        | `==` | `===` |
+| -------------- | ---- | ----- |
+| Compares value | ✅    | ✅     |
+| Compares type  | ❌    | ✅     |
+| Type coercion  | ✅    | ❌     |
+| Recommended    | ❌    | ✅     |
+
+---
+
+## Tricky interview examples ⚠️
+
+```js
+null == undefined   // true
+null === undefined  // false
+
+0 == false          // true
+0 === false         // false
+
+"" == false         // true
+"" === false        // false
+```
+
+---
+
+## Interview-ready one-liner
+
+> **`==` compares values after type coercion, whereas `===` compares both value and type without coercion.**
+
+---
+
+## Best practice (always say this)
+
+> ✅ **Use `===` to avoid unexpected bugs**
+
+---
+
+## One-line memory trick 🧠
+
+> **`===` means “exactly equal”**
+
+
+
+
+
+
+
+
+
+
+
+
++++++  ✅ Truthy and Falsy Values in JavaScript
+
+### 🔹 What does it mean?
+
+> In JavaScript, **every value is evaluated as either `true` or `false`** when used in a boolean context (like `if`, `while`, logical operators).
+
+---
+
+## ❌ Falsy Values (ONLY 6)
+
+These values are treated as **false**:
+
+```js
+false
+0
+-0
+0n        // BigInt zero
+""        // empty string
+null
+undefined
+NaN
+```
+
+👉 **Remember:** *If it’s not in this list, it’s truthy.*
+
+---
+
+## ✅ Truthy Values
+
+Everything else is **truthy**, even if it looks “false-like” 😄
+
+Examples:
+
+```js
+true
+1
+-1
+"0"
+"false"
+[]
+{}
+function(){}
+```
+
+---
+
+## Example in code
+
+```js
+if ("") {
+  console.log("Runs");
+} else {
+  console.log("Does not run");
+}
+// Output: Does not run
+```
+
+```js
+if ("0") {
+  console.log("Runs");
+}
+// Output: Runs
+```
+
+---
+
+## Common interview traps ⚠️
+
+```js
+if ([]) console.log("Truthy");   // Truthy
+if ({}) console.log("Truthy");   // Truthy
+if ("false") console.log("Truthy"); // Truthy
+```
+
+---
+
+## Interview-ready definition
+
+> **Truthy values evaluate to `true` and falsy values evaluate to `false` in a boolean context in JavaScript.**
+
+---
+
+## One-line memory trick 🧠
+
+> **Falsy values are limited; truthy is everything else.**
+
+---
+
+## Bonus tip (BEST PRACTICE)
+
+Instead of:
+
+```js
+if (value == false)
+```
+
+Use:
+
+```js
+if (!value)
+```
+
+Or explicitly:
+
+```js
+if (value === "")
+```
+
+
+
+
+
+
+
+
+
+
+
+
++++++  ✅ What does the `typeof` operator do?
+
+> The **`typeof` operator** returns a **string** indicating the **data type of a value or variable** in JavaScript.
+
+---
+
+## Basic examples
+
+```js
+typeof 10          // "number"
+typeof "Hello"     // "string"
+typeof true        // "boolean"
+typeof undefined   // "undefined"
+typeof null        // "object" ❗ (JS bug)
+typeof {}          // "object"
+typeof []          // "object"
+typeof function(){} // "function"
+```
+
+---
+
+## Why `typeof null` is `"object"` ❗
+
+This is a **known JavaScript bug** from the early days.
+It remains for **backward compatibility**.
+
+➡️ In interviews, just say:
+
+> "`typeof null` returns `'object'` due to a historical bug in JavaScript."
+
+---
+
+## When is `typeof` used?
+
+* Checking variable types
+* Debugging
+* Type guarding (basic)
+* Avoiding runtime errors
+
+Example:
+
+```js
+if (typeof x === "number") {
+  console.log(x * 2);
+}
+```
+
+---
+
+## Important interview limitations ⚠️
+
+❌ `typeof` cannot distinguish:
+
+* `null` vs `object`
+* arrays vs objects
+
+Better for arrays:
+
+```js
+Array.isArray([])
+```
+
+---
+
+## Interview-ready one-liner
+
+> **The `typeof` operator is used to determine the data type of a value in JavaScript.**
+
+---
+
+## One-line memory trick 🧠
+
+> **`typeof` tells “what type of value this is.”**
+
+
+
+
+
+
+
+
+
+
+
+
+++++  ✅ What is *scope* in JavaScript?
+
+> **Scope defines where a variable or function is accessible in your code.**
+
+In simple words:
+👉 **Scope decides “who can use what variable and where.”**
+
+---
+
+## Types of scope in JavaScript
+
+### 1️⃣ **Global Scope**
+
+Variables declared **outside** any function or block.
+
+```js
+let x = 10;
+
+function test() {
+  console.log(x);
+}
+```
+
+✔ Accessible everywhere
+
+---
+
+### 2️⃣ **Function Scope**
+
+Variables declared inside a function.
+
+```js
+function demo() {
+  let y = 20;
+}
+console.log(y); // ❌ Error
+```
+
+✔ Accessible only inside the function
+
+---
+
+### 3️⃣ **Block Scope**
+
+Variables declared using `let` or `const` inside `{ }`.
+
+```js
+if (true) {
+  let z = 30;
+}
+console.log(z); // ❌ Error
+```
+
+⚠️ `var` does NOT follow block scope.
+
+---
+
+### 4️⃣ **Lexical Scope**
+
+Inner functions can access variables from **outer functions**.
+
+```js
+function outer() {
+  let a = 10;
+  function inner() {
+    console.log(a);
+  }
+}
+```
+
+➡️ This enables **closures**.
+
+---
+
+## Interview-ready definition (say this)
+
+> **Scope in JavaScript determines the accessibility and lifetime of variables within different parts of a script.**
+
+---
+
+## Common interview trap ⚠️
+
+```js
+{
+  var x = 5;
+}
+console.log(x); // 5 ❗
+```
+
+Because `var` is **function-scoped**, not block-scoped.
+
+---
+
+## One-line memory trick 🧠
+
+> **Scope answers: “Where can I use this variable?”**
+
+---
+
+## Bonus: Scope Chain
+
+JavaScript looks for variables:
+
+1. Local scope
+2. Outer scope
+3. Global scope
+
+➡️ This is called the **scope chain**.
+
+
+
+
+
+
+
+
+
+
+
++++++ ✅ What is **Block Scope** in JavaScript?
+
+> **Block scope means that variables declared inside a `{ }` block are accessible only within that block.**
+
+Blocks include:
+
+* `if`
+* `for`
+* `while`
+* `switch`
+* `{ }`
+
+---
+
+## Block scope with `let` and `const`
+
+```js
+if (true) {
+  let a = 10;
+  const b = 20;
+}
+
+console.log(a); // ❌ ReferenceError
+console.log(b); // ❌ ReferenceError
+```
+
+✔ `a` and `b` exist **only inside the block**
+
+---
+
+## `var` does NOT follow block scope ❌
+
+```js
+if (true) {
+  var x = 30;
+}
+
+console.log(x); // ✅ 30
+```
+
+Because `var` is **function-scoped**, not block-scoped.
+
+---
+
+## Why block scope is important?
+
+* Prevents accidental variable overwrite
+* Improves readability
+* Makes code safer
+* Avoids bugs in loops
+
+---
+
+## Common interview example (loops)
+
+```js
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 1000);
+}
+// Output: 0 1 2
+```
+
+With `var`:
+
+```js
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 1000);
+}
+// Output: 3 3 3 ❗
+```
+
+---
+
+## Interview-ready one-liner
+
+> **Block scope restricts variable access to the block in which it is declared, and it applies to `let` and `const` but not `var`.**
+
+---
+
+## One-line memory trick 🧠
+
+> **Block scope = visible only inside `{ }`**
+
+
+
+
+
+
+
+
+
+
+
+
++++++ ✅ What is **Lexical Scope**?
+
+> **Lexical scope means that a function’s scope is determined by where it is written in the code, not by where it is called.**
+
+In short:
+👉 **Scope is fixed at code-writing time.**
+
+---
+
+## Simple example
+
+```js
+function outer() {
+  let x = 10;
+
+  function inner() {
+    console.log(x);
+  }
+
+  inner();
+}
+
+outer();
+```
+
+### Why does this work?
+
+* `inner()` is **written inside** `outer()`
+* So `inner()` can access `x`
+* This is **lexical scope**
+
+---
+
+## Example to show “not call-based”
+
+```js
+let x = 5;
+
+function printX() {
+  console.log(x);
+}
+
+function run(fn) {
+  let x = 20;
+  fn();
+}
+
+run(printX); // 5
+```
+
+Even though `printX()` is called inside `run()`,
+it still uses the `x` from **where it was defined**, not where it was called.
+
+---
+
+## Relationship with Closure
+
+* **Lexical scope** decides *what can be accessed*
+* **Closure** remembers those variables even after the outer function finishes
+
+👉 Closure is **possible because of lexical scope**
+
+---
+
+## Interview-ready definition
+
+> **Lexical scope is the scope resolution determined by the physical structure of the code, where inner functions can access variables of their outer functions.**
+
+---
+
+## One-line memory trick 🧠
+
+> **Lexical = location in code decides scope**
+
+
+
+
+
+
+
+
+
+
+
+
++++++ ✅ What is a **Closure** in JavaScript?
+
+> A **closure** is created when a function **remembers and accesses variables from its lexical scope**, even after the outer function has finished executing.
+
+In short:
+👉 **A function + its surrounding scope = closure**
+
+---
+
+## Simple example
+
+```js
+function outer() {
+  let count = 0;
+
+  return function inner() {
+    count++;
+    return count;
+  };
+}
+
+const counter = outer();
+
+console.log(counter()); // 1
+console.log(counter()); // 2
+console.log(counter()); // 3
+```
+
+### What’s happening?
+
+* `outer()` runs once
+* `inner()` remembers `count`
+* Even though `outer()` is done, `count` is still accessible
+* That’s **closure**
+
+---
+
+## Why closures work
+
+Because of **lexical scope**:
+
+* Inner functions can access outer variables
+* JavaScript keeps those variables alive in memory
+
+---
+
+## Interview-ready definition (say this)
+
+> **A closure is a function that retains access to variables from its lexical scope even after the outer function has returned.**
+
+---
+
+## Real-world use cases
+
+* Counters
+* Data privacy (private variables)
+* Event handlers
+* Callbacks
+* Currying & partial functions
+
+---
+
+## Common interview trap ⚠️
+
+```js
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 1000);
+}
+// Output: 3 3 3
+```
+
+Why?
+
+* `var` shares one scope
+* All closures refer to the same `i`
+
+Fix:
+
+```js
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 1000);
+}
+// Output: 0 1 2
+```
+
+---
+
+## One-line memory trick 🧠
+
+> **Closure = function that remembers its outer variables**
+
+---
+
+## Important interview note
+
+Closures are:
+
+* Not bugs
+* Not slow by default
+* Automatically managed by JS garbage collector
+
+
+
+
+
+
+
+
+
+
++++++  ✅ What is an **Execution Context**?
+
+> An **execution context** is the **environment in which JavaScript code is evaluated and executed**.
+
+In simple words:
+👉 It tells JavaScript **what to run, where to run it, and how to run it**.
+
+---
+
+## Types of Execution Context
+
+### 1️⃣ **Global Execution Context (GEC)**
+
+* Created when the JS file starts running
+* Only **one** GEC exists
+* Creates:
+
+  * Global object (`window` in browser)
+  * `this`
+  * Global variables & functions
+
+---
+
+### 2️⃣ **Function Execution Context (FEC)**
+
+* Created every time a function is called
+* Has its own:
+
+  * Variables
+  * Arguments
+  * Scope chain
+  * `this`
+
+---
+
+### 3️⃣ **Eval Execution Context** (rare)
+
+* Created when `eval()` is used
+* Generally avoided
+
+---
+
+## Phases of Execution Context
+
+### 🔹 1. Creation Phase
+
+JavaScript:
+
+* Creates memory for variables & functions
+* Hoists function declarations
+* Initializes:
+
+  * `var` → `undefined`
+  * `let/const` → uninitialized (TDZ)
+
+---
+
+### 🔹 2. Execution Phase
+
+* Code runs line by line
+* Variables get assigned values
+* Functions are executed
+
+---
+
+## Example to understand
+
+```js
+let x = 10;
+
+function foo() {
+  let y = 20;
+  console.log(x + y);
+}
+
+foo();
+```
+
+Flow:
+
+1. Global Execution Context created
+2. `x` stored
+3. `foo()` called → new Function Execution Context
+4. `y` stored
+5. `x` resolved via scope chain
+
+---
+
+## Execution Context & Call Stack
+
+* Execution contexts are managed using the **Call Stack**
+* Stack works on **LIFO** (Last In, First Out)
+
+```js
+function a() {
+  b();
+}
+
+function b() {
+  c();
+}
+
+function c() {
+  console.log("Hello");
+}
+
+a();
+```
+
+Call stack:
+
+```
+GEC
+a()
+b()
+c()
+```
+
+---
+
+## Interview-ready definition
+
+> **An execution context is the environment where JavaScript code is created and executed, consisting of variable memory, scope chain, and `this` binding.**
+
+---
+
+## One-line memory trick 🧠
+
+> **Execution context = JS runtime environment for code**
+
+
+
+
+
+
+
+
+
+
+
+
++++++  ✅ What is the **Call Stack**?
+
+> The **call stack** is a data structure that keeps track of **function calls** in JavaScript and controls the **order of execution**.
+
+It works on:
+👉 **LIFO (Last In, First Out)**
+
+---
+
+## How the call stack works (simple)
+
+```js
+function one() {
+  two();
+}
+
+function two() {
+  three();
+}
+
+function three() {
+  console.log("Hello");
+}
+
+one();
+```
+
+### Step-by-step stack
+
+1. Global Execution Context → pushed
+2. `one()` → pushed
+3. `two()` → pushed
+4. `three()` → pushed
+5. `three()` finishes → popped
+6. `two()` finishes → popped
+7. `one()` finishes → popped
+
+---
+
+## Visual representation
+
+```
+| three() |
+| two()   |
+| one()   |
+| GEC     |
+```
+
+---
+
+## Why call stack is important?
+
+* Executes code in correct order
+* Handles function execution contexts
+* Detects stack overflow
+
+---
+
+## Stack overflow (interview trap ⚠️)
+
+```js
+function infinite() {
+  infinite();
+}
+infinite();
+```
+
+❌ Maximum call stack size exceeded
+
+---
+
+## JavaScript specifics
+
+* JavaScript has a **single-threaded call stack**
+* Only **one function runs at a time**
+
+Asynchronous code doesn’t block the stack (handled via event loop).
+
+---
+
+## Interview-ready definition
+
+> **The call stack is a LIFO data structure that manages execution contexts of function calls in JavaScript.**
+
+---
+
+## One-line memory trick 🧠
+
+> **Call stack tracks “who called whom”.**
+
+
+
+
+
+
+
+
+
+
+
+
+
++++++ ✅ What is `this` in JavaScript?
+
+> **`this` refers to the object that is currently executing the function.**
+
+⚠️ Its value is **not fixed** — it depends on **how the function is called**, not where it is written.
+
+---
+
+## Rules of `this` (INTERVIEW GOLD ⭐)
+
+---
+
+### 1️⃣ Global context
+
+```js
+console.log(this);
+```
+
+* In browser → `window`
+* In Node.js → `{}` (module object)
+
+---
+
+### 2️⃣ Inside a regular function
+
+```js
+function show() {
+  console.log(this);
+}
+show();
+```
+
+* Non-strict mode → `window`
+* Strict mode → `undefined`
+
+---
+
+### 3️⃣ Inside an object method (MOST COMMON)
+
+```js
+const user = {
+  name: "Mahesh",
+  showName() {
+    console.log(this.name);
+  }
+};
+
+user.showName(); // Mahesh
+```
+
+👉 `this` refers to the **object calling the method**
+
+---
+
+### 4️⃣ Losing `this` (INTERVIEW TRAP ⚠️)
+
+```js
+const fn = user.showName;
+fn(); // undefined
+```
+
+Why?
+
+* Function is called **without object**
+* `this` falls back to global / undefined
+
+---
+
+### 5️⃣ Arrow functions (VERY IMPORTANT)
+
+```js
+const user = {
+  name: "Mahesh",
+  show: () => {
+    console.log(this.name);
+  }
+};
+
+user.show(); // undefined
+```
+
+❗ Arrow functions **do NOT have their own `this`**
+They inherit `this` from their **lexical scope**
+
+---
+
+### 6️⃣ Arrow function inside method (correct use)
+
+```js
+const user = {
+  name: "Mahesh",
+  show() {
+    setTimeout(() => {
+      console.log(this.name);
+    }, 1000);
+  }
+};
+
+user.show(); // Mahesh
+```
+
+---
+
+### 7️⃣ `call`, `apply`, `bind`
+
+```js
+function greet() {
+  console.log(this.name);
+}
+
+greet.call({ name: "Mahesh" }); // Mahesh
+```
+
+* `call` → immediate, args separated
+* `apply` → immediate, args array
+* `bind` → returns new function
+
+---
+
+## Interview-ready definition (say this)
+
+> **The `this` keyword in JavaScript refers to the object that invokes the function, and its value is determined at runtime based on how the function is called.**
+
+---
+
+## One-line memory trick 🧠
+
+> **`this` depends on the caller, not the function.**
+
+
+
+
+
+
+
+
+
+
+
++++++ What is the Synchronous JavaScript & Asynchronous JavaScript
+
+
+This is a **very important JavaScript interview question** 👍
+It connects directly to **call stack, event loop, and async/await**.
+
+---
+
+## ✅ Synchronous JavaScript
+
+> **Synchronous code executes line by line, and each operation must finish before the next one starts.**
+
+### Key points
+
+* Blocking in nature
+* Uses the call stack directly
+* Slow operations block execution
+
+### Example
+
+```js
+console.log("Start");
+
+function task() {
+  for (let i = 0; i < 1e9; i++) {}
+}
+
+task();
+console.log("End");
+```
+
+📌 Output:
+
+```
+Start
+End   // after delay
+```
+
+---
+
+## ✅ Asynchronous JavaScript
+
+> **Asynchronous code allows long-running tasks to run in the background without blocking the main thread.**
+
+### Key points
+
+* Non-blocking
+* Uses Web APIs + Event Loop
+* Improves performance & responsiveness
+
+### Example
+
+```js
+console.log("Start");
+
+setTimeout(() => {
+  console.log("Async Task");
+}, 1000);
+
+console.log("End");
+```
+
+📌 Output:
+
+```
+Start
+End
+Async Task
+```
+
+---
+
+## How async works (simple flow)
+
+1. Async task sent to Web APIs
+2. Callback placed in task queue
+3. Event loop checks call stack
+4. Callback executed when stack is empty
+
+---
+
+## Common async techniques
+
+* Callbacks
+* Promises
+* `async / await`
+
+---
+
+## Comparison Table (Interview-ready)
+
+| Feature     | Synchronous  | Asynchronous      |
+| ----------- | ------------ | ----------------- |
+| Execution   | One by one   | Non-blocking      |
+| Blocking    | Yes          | No                |
+| Performance | Slower       | Faster            |
+| Use case    | Simple tasks | API calls, timers |
+
+---
+
+## Interview-ready one-liner
+
+> **Synchronous JavaScript executes code sequentially, while asynchronous JavaScript allows tasks to run without blocking the main thread.**
+
+---
+
+## One-line memory trick 🧠
+
+> **Sync waits. Async continues.**
+
+
+
+
+Yes 👍 **your understanding is basically correct** — just refine the wording a little for interview clarity.
+
+### Short & correct explanation (use this):
+
+> **JavaScript itself is synchronous and single-threaded.**
+> All code is executed **synchronously on the call stack**, but **timers, promises, and async operations use asynchronous mechanisms** (Web APIs + event loop) to avoid blocking the main thread.
+
+### Even shorter (interview one-liner):
+
+> **JavaScript runs synchronously, but supports asynchronous behavior using callbacks, promises, and async/await.**
+
+### Key correction to your statement:
+
+* ✔ JS core execution → **synchronous**
+* ✔ `setTimeout`, `fetch`, `Promise` → **handled asynchronously**
+* ❌ JS does **not** run tasks in parallel on the call stack
+
+### Memory trick 🧠
+
+> **Single thread, synchronous execution — async handling via event loop.**
+
+That’s it. Your concept is right 👍
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----- 
+## ✅ What is `setTimeout()`?
+
+> **`setTimeout()` is a Web API function that executes a function once after a specified delay (in milliseconds).**
+
+It is **asynchronous** and **non-blocking**.
+
+### Example
+
+```js
+setTimeout(() => {
+  console.log("Executed after 2 seconds");
+}, 2000);
+```
+
+📌 This does **not block** the rest of the code.
+
+---
+
+## ✅ What is `setInterval()`?
+
+> **`setInterval()` executes a function repeatedly at fixed time intervals (in milliseconds).**
+
+### Example
+
+```js
+setInterval(() => {
+  console.log("Runs every 1 second");
+}, 1000);
+```
+
+---
+
+## Key difference (Interview Table)
+
+| Feature   | `setTimeout()`   | `setInterval()`   |
+| --------- | ---------------- | ----------------- |
+| Execution | Runs once        | Runs repeatedly   |
+| Delay     | One-time delay   | Fixed interval    |
+| Async     | Yes              | Yes               |
+| Can stop  | `clearTimeout()` | `clearInterval()` |
+
+---
+
+## Important interview point ⚠️
+
+Timers are:
+
+* **Not part of JavaScript engine**
+* Provided by **Browser / Node.js (Web APIs)**
+
+They use:
+👉 **Event loop + task queue**
+
+---
+
+## Interview-ready one-liner
+
+> **`setTimeout` runs a function once after a delay, while `setInterval` runs a function repeatedly at fixed intervals.**
+
+---
+
+## One-line memory trick 🧠
+
+> **Timeout = once, Interval = repeat**
+
+---
+
+## Small but important note
+
+Even `setTimeout(fn, 0)`:
+
+* Does NOT run immediately
+* Runs **after the call stack is empty**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----- ✅ What is a **Promise** in JavaScript?
+
+> A **Promise** is an object that represents the **eventual completion or failure of an asynchronous operation**.
+
+In simple words:
+👉 **A promise is a placeholder for a value that will be available in the future.**
+
+---
+
+## Promise states
+
+A Promise has **3 states**:
+
+1. **Pending** – initial state
+2. **Fulfilled** – operation completed successfully
+3. **Rejected** – operation failed
+
+---
+
+## Basic example
+
+```js
+const promise = new Promise((resolve, reject) => {
+  let success = true;
+
+  if (success) {
+    resolve("Done!");
+  } else {
+    reject("Error!");
+  }
+});
+```
+
+---
+
+## Consuming a promise
+
+```js
+promise
+  .then(result => console.log(result))
+  .catch(error => console.log(error))
+  .finally(() => console.log("Finished"));
+```
+
+---
+
+## Why promises are used
+
+* Handle async operations cleanly
+* Avoid callback hell
+* Better error handling
+* Chain async operations
+
+---
+
+## Promise vs callback (short)
+
+| Callback            | Promise       |
+| ------------------- | ------------- |
+| Nested code         | Flat chaining |
+| Hard error handling | `.catch()`    |
+| Less readable       | More readable |
+
+---
+
+## Interview-ready one-liner
+
+> **A Promise is an object that handles asynchronous operations by representing a value that may be available now, later, or never.**
+
+---
+
+## One-line memory trick 🧠
+
+> **Promise = future value**
+
+---
+
+## Important interview note ⚠️
+
+Promises run callbacks in the **microtask queue**, which has **higher priority than timers**.
+
+
+
+
+
+
+
+
+
+
+
+
+----- ✅ States of a Promise in JavaScript
+
+A **Promise has 3 states**:
+
+1️⃣ **Pending**
+
+* Initial state
+* Operation is still in progress
+* Neither fulfilled nor rejected
+
+---
+
+2️⃣ **Fulfilled**
+
+* Operation completed successfully
+* Promise resolved with a value
+
+---
+
+3️⃣ **Rejected**
+
+* Operation failed
+* Promise rejected with an error
+
+---
+
+## Simple visual flow
+
+```
+Pending
+   ↓
+Fulfilled   OR   Rejected
+```
+
+---
+
+## Small example
+
+```js
+const p = new Promise((resolve, reject) => {
+  resolve("Success");
+});
+
+// p → fulfilled
+```
+
+---
+
+## Interview one-liner (say this)
+
+> **A Promise can be in pending, fulfilled, or rejected state.**
+
+---
+
+## One-line memory trick 🧠
+
+> **Promise starts pending, ends fulfilled or rejected.**
+
+
+
+
+
+
+
+
+
+
+
+
+---- ❌ Callback Hell (what interviewers mean)
+
+Imagine 3 async tasks:
+
+1. Login user
+2. Fetch user data
+3. Fetch user posts
+
+### Callback-based code
+
+```js
+loginUser("mahesh", (user) => {
+  getUserData(user.id, (data) => {
+    getUserPosts(data.id, (posts) => {
+      console.log(posts);
+    }, (err) => {
+      console.error(err);
+    });
+  }, (err) => {
+    console.error(err);
+  });
+}, (err) => {
+  console.error(err);
+});
+```
+
+### Problems ❌
+
+* Deep nesting
+* Hard to read
+* Hard to debug
+* Error handling repeated
+
+This is called **callback hell / pyramid of doom**.
+
+---
+
+## ✅ Same example using **Promises**
+
+### Promise-based functions
+
+```js
+function loginUser(username) {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve({ id: 1, name: username });
+    }, 1000);
+  });
+}
+
+function getUserData(userId) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({ id: userId, role: "admin" });
+    }, 1000);
+  });
+}
+
+function getUserPosts(userId) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(["Post 1", "Post 2"]);
+    }, 1000);
+  });
+}
+```
+
+### Handling with Promises (clean)
+
+```js
+loginUser("mahesh")
+  .then(user => getUserData(user.id))
+  .then(data => getUserPosts(data.id))
+  .then(posts => console.log(posts))
+  .catch(err => console.error(err));
+```
+
+✔ No nesting
+✔ Single error handler
+✔ Easy to read
+
+---
+
+## ⭐ Best way (Interview preferred): `async / await`
+
+```js
+async function showPosts() {
+  try {
+    const user = await loginUser("mahesh");
+    const data = await getUserData(user.id);
+    const posts = await getUserPosts(data.id);
+    console.log(posts);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+showPosts();
+```
+
+---
+
+## One-line interview summary 🧠
+
+> **Promises solve callback hell by flattening async code and improving readability and error handling.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----- ## ✅ What is the **DOM (Document Object Model)**?
+
+> **The DOM is a programming interface that represents an HTML (or XML) document as a tree-like structure, where each element is an object that JavaScript can access and manipulate.**
+
+In simple words:
+👉 **DOM = JavaScript’s way to talk to and change the webpage.**
+
+---
+
+## 🌳 How the DOM looks (tree concept)
+
+![Image](https://www.w3schools.com/js/pic_htmltree.gif)
+
+![Image](https://cdn.sanity.io/images/gpji8x82/production/5910b5ee6fa6049fedc86092a3bc6547d64d15b5-960x540.jpg?w=800)
+
+![Image](https://upload.wikimedia.org/wikipedia/commons/5/5a/DOM-model.svg)
+
+```html
+<html>
+  <body>
+    <h1>Hello</h1>
+    <p>Welcome</p>
+  </body>
+</html>
+```
+
+JavaScript sees it as objects:
+
+```
+document
+ └── html
+     └── body
+         ├── h1
+         └── p
+```
+
+---
+
+## 🧠 Why DOM is important
+
+Using the DOM, JavaScript can:
+
+* Read HTML elements
+* Change content & styles
+* Add/remove elements
+* Handle user events
+
+---
+
+## 🔧 Example (simple DOM manipulation)
+
+```js
+document.getElementById("title").innerText = "Hello DOM";
+```
+
+This changes the page **without reloading**.
+
+---
+
+## DOM vs HTML (Interview trap ⚠️)
+
+| HTML                 | DOM                        |
+| -------------------- | -------------------------- |
+| Static markup        | Live object representation |
+| Written by developer | Created by browser         |
+| Cannot change itself | Can be modified by JS      |
+
+---
+
+## Interview-ready one-liner ⭐
+
+> **The DOM is a tree-based representation of a web document that allows JavaScript to dynamically access and modify webpage content.**
+
+---
+
+## 🧠 One-line memory trick
+
+> **HTML is the blueprint, DOM is the live structure.**
+
+
+
+
+
+
+
+
+
+
+
+
+----- what is BOM & CSSOM?
+Yes 👍 **you’re absolutely right** — besides **DOM**, there are **BOM** and **CSSOM** too.
+This is actually a **great interview-level understanding**.
+
+---
+
+## 🌐 BOM, DOM & CSSOM — Explained Simply
+
+---
+
+## ✅ **DOM (Document Object Model)**
+
+> Represents the **HTML structure** of the webpage as objects.
+
+* Created from HTML
+* Allows JS to **read & modify content**
+* Example:
+
+```js
+document.getElementById("title").innerText = "Hello";
+```
+
+---
+
+## ✅ **BOM (Browser Object Model)**
+
+> Represents the **browser environment**, not the page.
+
+* Controls browser features
+* Not standardized like DOM
+* Top object: `window`
+
+Examples:
+
+```js
+window.alert("Hi");
+window.location.href;
+window.navigator.userAgent;
+```
+
+---
+
+## ✅ **CSSOM (CSS Object Model)**
+
+> Represents the **CSS styles** of the webpage as objects.
+
+* Created from CSS
+* Allows JS to read & modify styles
+* Works together with DOM
+
+Example:
+
+```js
+document.body.style.backgroundColor = "lightblue";
+```
+
+---
+
+## How they relate (important concept)
+
+![Image](https://miro.medium.com/v2/resize%3Afit%3A1400/1%2AOY-um1C1N9evOIlYjzADZg.png)
+
+![Image](https://web.dev/static/articles/critical-rendering-path/render-tree-construction/image/dom-cssom-are-combined-8de5805b2061e.png)
+
+![Image](https://miro.medium.com/v2/resize%3Afit%3A1400/0%2A_mUaF4ho09lojJ7D.png)
+
+```text
+window (BOM)
+ ├── document (DOM)
+ │    └── HTML elements
+ └── CSSOM
+      └── CSS rules
+```
+
+DOM + CSSOM → **Render Tree** → Page shown on screen
+
+---
+
+## Interview comparison table ⭐
+
+| Model | Represents     | Used for            |
+| ----- | -------------- | ------------------- |
+| DOM   | HTML content   | Structure & content |
+| BOM   | Browser window | Browser control     |
+| CSSOM | CSS styles     | Styling & layout    |
+
+---
+
+## Interview-ready one-liner
+
+> **DOM handles structure, BOM handles browser features, and CSSOM handles styling in a web page.**
+
+---
+
+## 🧠 Memory trick
+
+> **DOM = content
+> CSSOM = style
+> BOM = browser**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----- This is a **very common interview question** 👍
+Here’s a **clear, short, and interview-ready** explanation.
+
+---
+
+## ✅ Difference between **`window`** and **`document`**
+
+### 🔹 `window` object
+
+> **`window` represents the browser window (or tab).**
+> It is the **global object** in the browser.
+
+* Part of **BOM (Browser Object Model)**
+* Controls browser-level features
+* All global variables/functions become properties of `window`
+
+**Examples:**
+
+```js
+window.alert("Hello");
+window.location.href;
+window.setTimeout(() => {}, 1000);
+```
+
+---
+
+### 🔹 `document` object
+
+> **`document` represents the HTML page loaded inside the window.**
+
+* Part of **DOM (Document Object Model)**
+* Used to access and manipulate HTML elements
+* Created from the HTML source
+
+**Examples:**
+
+```js
+document.getElementById("title");
+document.querySelector(".box");
+document.createElement("div");
+```
+
+---
+
+## Relationship (important ⭐)
+
+```js
+window.document === document; // true
+```
+
+👉 `document` is a **property of `window`**
+
+---
+
+## Interview Comparison Table
+
+| Feature    | `window`           | `document`                  |
+| ---------- | ------------------ | --------------------------- |
+| Represents | Browser window/tab | Web page (HTML)             |
+| Model      | BOM                | DOM                         |
+| Scope      | Global object      | Page content                |
+| Controls   | Browser features   | HTML elements               |
+| Example    | `window.location`  | `document.getElementById()` |
+
+---
+
+## Interview-ready one-liner
+
+> **`window` is the global browser object, while `document` represents the web page inside that window.**
+
+---
+
+## 🧠 Memory trick
+
+> **Window = browser
+> Document = webpage**
+
+---
+
+## Common interview trap ⚠️
+
+```js
+this === window   // true (browser global scope)
+this === document // false
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----  ✅ Difference between **HTML** and **DOM**
+
+### 🔹 HTML
+
+> **HTML is a static markup language** used to define the structure of a webpage.
+
+* Written by the developer
+* Saved as a `.html` file
+* Does not change by itself
+
+Example:
+
+```html
+<h1>Hello</h1>
+<p>Welcome</p>
+```
+
+---
+
+### 🔹 DOM (Document Object Model)
+
+> **DOM is a dynamic, tree-like object representation of the HTML document created by the browser.**
+
+* Created **from HTML**
+* Live & updatable
+* Can be accessed and modified using JavaScript
+
+Example:
+
+```js
+document.querySelector("h1").innerText = "Hello DOM";
+```
+
+---
+
+## How they are related
+
+![Image](https://www.tutorialspoint.com/html/images/html_dom.jpg)
+
+![Image](https://www.w3schools.com/whatis/img_htmltree.gif)
+
+![Image](https://i.sstatic.net/kBF3j.png)
+
+```text
+HTML file  →  Browser parses  →  DOM tree  →  Rendered page
+```
+
+---
+
+## Interview Comparison Table ⭐
+
+| Feature      | HTML      | DOM        |
+| ------------ | --------- | ---------- |
+| Nature       | Static    | Dynamic    |
+| Created by   | Developer | Browser    |
+| Modifiable   | ❌ No      | ✅ Yes      |
+| Used by      | Browser   | JavaScript |
+| Updates page | ❌ No      | ✅ Yes      |
+
+---
+
+## Interview-ready one-liner
+
+> **HTML is the static structure of a webpage, while the DOM is the dynamic object model created from that HTML which JavaScript can manipulate.**
+
+---
+
+## 🧠 Memory trick
+
+> **HTML is the blueprint, DOM is the live building.**
+
+---
+
+## Common interview mistake ⚠️
+
+❌ Saying DOM *is* HTML
+✅ DOM is **created from** HTML
+
+---
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----- ✅ `getElementById()`
+
+> Selects **ONE element** by its `id`.
+
+```js
+const title = document.getElementById("title");
+title.style.color = "red";
+```
+
+* Fastest selector
+* Only works with **id**
+* Returns **one element** or `null`
+
+---
+
+## ✅ `querySelector()`
+
+> Selects the **FIRST element** that matches a **CSS selector**.
+
+```js
+const box = document.querySelector(".box");
+const heading = document.querySelector("#title");
+```
+
+* Works with `#id`, `.class`, `tag`, combinations
+* More flexible than `getElementById`
+
+---
+
+## Other common DOM selectors (VERY COMMON)
+
+### 🔹 `getElementsByClassName()`
+
+```js
+const items = document.getElementsByClassName("item");
+```
+
+* Returns **HTMLCollection**
+* Live collection
+
+---
+
+### 🔹 `getElementsByTagName()`
+
+```js
+const paras = document.getElementsByTagName("p");
+```
+
+* Selects by tag name
+* Returns **HTMLCollection**
+
+---
+
+### 🔹 `querySelectorAll()`
+
+```js
+const boxes = document.querySelectorAll(".box");
+boxes.forEach(box => box.style.border = "1px solid");
+```
+
+* Returns **NodeList**
+* Can select multiple elements
+* Supports `forEach`
+
+---
+
+## Quick interview comparison table ⭐
+
+| Method                   | Selects      | Returns        |
+| ------------------------ | ------------ | -------------- |
+| `getElementById`         | id           | Single element |
+| `querySelector`          | CSS selector | First match    |
+| `querySelectorAll`       | CSS selector | NodeList       |
+| `getElementsByClassName` | class        | HTMLCollection |
+| `getElementsByTagName`   | tag          | HTMLCollection |
+
+---
+
+## Interview-ready one-liner
+
+> **`getElementById` selects an element by id, while `querySelector` selects the first element matching a CSS selector.**
+
+---
+
+## 🧠 Memory trick
+
+> **getElement → specific
+> querySelector → CSS power**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---- ✅ What is **Event Bubbling**?
+
+> **Event bubbling is a mechanism where an event starts from the target element and propagates upward to its parent elements in the DOM tree.**
+
+In simple words:
+👉 **Event flows from child → parent → root**
+
+---
+
+## Simple example
+
+```html
+<div id="parent">
+  <button id="child">Click me</button>
+</div>
+```
+
+```js
+document.getElementById("parent").addEventListener("click", () => {
+  console.log("Parent clicked");
+});
+
+document.getElementById("child").addEventListener("click", () => {
+  console.log("Child clicked");
+});
+```
+
+### Output when button is clicked:
+
+```
+Child clicked
+Parent clicked
+```
+
+✔ Event fired on child first
+✔ Then bubbled up to parent
+
+---
+
+## Why event bubbling is useful?
+
+* Enables **event delegation**
+* Reduces number of event listeners
+* Improves performance
+
+---
+
+## How to stop event bubbling?
+
+```js
+document.getElementById("child").addEventListener("click", (e) => {
+  e.stopPropagation();
+});
+```
+
+---
+
+## Bubbling vs Capturing (very short)
+
+* **Capturing**: Parent → Child
+* **Bubbling**: Child → Parent (default)
+
+---
+
+## Interview-ready one-liner ⭐
+
+> **Event bubbling is the process where an event propagates from the target element up through its ancestors in the DOM.**
+
+---
+
+## 🧠 Memory trick
+
+> **Bubble goes up ⬆️**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----  ✅ What is **Event Capturing**?
+
+> **Event capturing is the phase where an event travels from the top (root) of the DOM down to the target element.**
+
+In simple words:
+👉 **Event flows from parent → child**
+
+⚠️ Capturing is **NOT default** — you must enable it.
+
+---
+
+## Event flow phases (important ⭐)
+
+```
+Capturing → Target → Bubbling
+```
+
+---
+
+## Visual idea
+
+![Image](https://blog.logrocket.com/wp-content/uploads/2021/07/event-capturing-bubbling-sequence-diagram.png)
+
+![Image](https://javascript.info/article/bubbling-and-capturing/eventflow.svg)
+
+![Image](https://www.kirupa.com/html5/images/bubble_phase2_200.png)
+
+---
+
+## Example: Event Capturing
+
+### HTML
+
+```html
+<div id="parent">
+  <button id="child">Click me</button>
+</div>
+```
+
+### JavaScript (Capturing enabled 👇)
+
+```js
+document.getElementById("parent").addEventListener(
+  "click",
+  () => {
+    console.log("Parent clicked");
+  },
+  true   // 👈 enables capturing
+);
+
+document.getElementById("child").addEventListener(
+  "click",
+  () => {
+    console.log("Child clicked");
+  },
+  true
+);
+```
+
+### Output when button is clicked:
+
+```
+Parent clicked
+Child clicked
+```
+
+✔ Parent runs first
+✔ Then child
+➡️ This is **event capturing**
+
+---
+
+## Compare quickly (Interview table)
+
+| Feature          | Capturing      | Bubbling       |
+| ---------------- | -------------- | -------------- |
+| Direction        | Parent → Child | Child → Parent |
+| Default          | ❌ No           | ✅ Yes          |
+| addEventListener | `true`         | `false`        |
+
+---
+
+## Interview-ready one-liner ⭐
+
+> **Event capturing is the phase where an event propagates from the root of the DOM down to the target element.**
+
+---
+
+## 🧠 Memory trick
+
+> **Capture = top to bottom ⬇️
+> Bubble = bottom to top ⬆️**
+
+---
+
+## Bonus (VERY IMPORTANT)
+
+```js
+addEventListener("click", fn, true);   // Capturing
+addEventListener("click", fn, false);  // Bubbling (default)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----  ✅ What is **Event Delegation**?
+
+> **Event delegation is a technique where a single event listener is added to a parent element to handle events for its child elements using event bubbling.**
+
+In simple words:
+👉 **Instead of adding events to many children, add ONE event to the parent.**
+
+---
+
+## Why it works
+
+Because of **event bubbling**:
+
+```
+Child → Parent → Document
+```
+
+---
+
+## Simple example (very common)
+
+### ❌ Without event delegation
+
+```js
+document.querySelectorAll("li").forEach(item => {
+  item.addEventListener("click", () => {
+    console.log(item.innerText);
+  });
+});
+```
+
+⚠️ Problems:
+
+* Too many listeners
+* Bad for performance
+* New elements won’t work automatically
+
+---
+
+### ✅ With event delegation (BEST PRACTICE)
+
+### HTML
+
+```html
+<ul id="list">
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+</ul>
+```
+
+### JavaScript
+
+```js
+document.getElementById("list").addEventListener("click", (e) => {
+  if (e.target.tagName === "LI") {
+    console.log(e.target.innerText);
+  }
+});
+```
+
+✔ Only **one event listener**
+✔ Works for existing & dynamically added elements
+✔ Better performance
+
+---
+
+## Visual idea (flow)
+
+![Image](https://www.theknowledgeacademy.com/_files/images/Flowchart_of_Delegation_Event_Model_in_Java.png)
+
+![Image](https://dmitripavlutin.com/static/9a8fc772a94452ca819295094c99b1a9/3e7da/javascript-event-propagation-5.png)
+
+![Image](https://i.sstatic.net/Y3dk9.png)
+
+---
+
+## Real-world use cases
+
+* Lists (`ul > li`)
+* Tables (row click)
+* Buttons inside cards
+* Dynamic content (React-like behavior)
+
+---
+
+## Interview-ready one-liner ⭐
+
+> **Event delegation is a technique of handling events at a parent level using event bubbling to manage child elements efficiently.**
+
+---
+
+## 🧠 Memory trick
+
+> **One parent listener → many child actions**
+
+---
+
+## Key interview points (say this confidently)
+
+* Uses **event bubbling**
+* Improves **performance**
+* Handles **dynamic elements**
+* Reduces **memory usage**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----- You prevent **default browser behavior** using **`event.preventDefault()`** ✅
+
+---
+
+## ✅ What is default browser behavior?
+
+Actions the browser performs automatically, like:
+
+* Form submission
+* Link navigation
+* Page reload
+* Right-click menu
+* Checkbox toggle
+
+---
+
+## ✅ How to prevent it?
+
+### 👉 Use `event.preventDefault()`
+
+### Example 1: Prevent form submit (VERY COMMON)
+
+```js
+document.querySelector("form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  console.log("Form submission stopped");
+});
+```
+
+✔ Stops page reload
+✔ Lets you handle form with JS
+
+---
+
+### Example 2: Prevent link navigation
+
+```html
+<a href="https://google.com" id="link">Click</a>
+```
+
+```js
+document.getElementById("link").addEventListener("click", (e) => {
+  e.preventDefault();
+  console.log("Navigation prevented");
+});
+```
+
+---
+
+### Example 3: Disable right-click
+
+```js
+document.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
+});
+```
+
+---
+
+## ❌ Common interview confusion ⚠️
+
+### `preventDefault()` vs `stopPropagation()`
+
+| Method              | Purpose              |
+| ------------------- | -------------------- |
+| `preventDefault()`  | Stops browser action |
+| `stopPropagation()` | Stops event bubbling |
+
+👉 They do **different things**
+
+---
+
+## Interview-ready one-liner ⭐
+
+> **Default browser behavior can be prevented using `event.preventDefault()` inside an event handler.**
+
+---
+
+## 🧠 Memory trick
+
+> **preventDefault = stop browser
+> stopPropagation = stop event flow**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----- This is a **VERY common interview question** 👍
+Here’s a **short, clear, and interview-ready** comparison with examples.
+
+---
+
+## ✅ `innerHTML`
+
+> Gets or sets **HTML content** inside an element.
+
+```js
+div.innerHTML = "<b>Hello</b>";
+```
+
+✔ Parses HTML
+✔ Can add elements
+⚠️ **Security risk (XSS)** if user input is used
+
+---
+
+## ✅ `innerText`
+
+> Gets or sets **visible text only** (respects CSS).
+
+```js
+div.innerText = "<b>Hello</b>";
+```
+
+✔ Shows text as user sees it
+✔ Respects `display: none`
+❌ Slower (layout calculation)
+
+---
+
+## ✅ `textContent`
+
+> Gets or sets **all text content**, regardless of visibility.
+
+```js
+div.textContent = "<b>Hello</b>";
+```
+
+✔ Fastest
+✔ No HTML parsing
+✔ Includes hidden text
+
+---
+
+## Side-by-side example
+
+### HTML
+
+```html
+<div id="box">
+  Hello <span style="display:none">Hidden</span>
+</div>
+```
+
+### JavaScript
+
+```js
+box.innerHTML    // "Hello <span style='display:none'>Hidden</span>"
+box.innerText    // "Hello"
+box.textContent  // "Hello Hidden"
+```
+
+---
+
+## Interview Comparison Table ⭐
+
+| Feature              | innerHTML | innerText | textContent |
+| -------------------- | --------- | --------- | ----------- |
+| HTML parsed          | ✅         | ❌         | ❌           |
+| Visible text only    | ❌         | ✅         | ❌           |
+| Includes hidden text | ❌         | ❌         | ✅           |
+| Performance          | Slower    | Slowest   | Fastest     |
+| Security risk        | ⚠️ Yes    | ❌ No      | ❌ No        |
+
+---
+
+## Interview-ready one-liner
+
+> **`innerHTML` works with HTML, `innerText` works with visible text, and `textContent` works with all text.**
+
+---
+
+## 🧠 Memory trick
+
+> **HTML → innerHTML
+> Visible → innerText
+> Raw text → textContent**
+
+---
+
+## Best practice (say this ⭐)
+
+* Use `textContent` for text
+* Avoid `innerHTML` with user input
+* Use `innerHTML` only when HTML is required
+
+
+
+
+
+
+
+
+## Example HTML
+
+```html
+<div id="box">
+  Hello <b>World</b>
+  <span style="display:none">Hidden</span>
+</div>
+```
+
+---
+
+## JavaScript
+
+```js
+const box = document.getElementById("box");
+
+console.log("innerHTML:", box.innerHTML);
+console.log("innerText:", box.innerText);
+console.log("textContent:", box.textContent);
+```
+
+---
+
+## Output explained
+
+### 🔹 `innerHTML`
+
+```txt
+Hello <b>World</b> <span style="display:none">Hidden</span>
+```
+
+✔ Returns **HTML markup**
+✔ Includes tags
+
+---
+
+### 🔹 `innerText`
+
+```txt
+Hello World
+```
+
+✔ Returns **only visible text**
+❌ Ignores hidden content
+❌ Slower (checks CSS)
+
+---
+
+### 🔹 `textContent`
+
+```txt
+Hello World Hidden
+```
+
+✔ Returns **all text**
+✔ Includes hidden text
+✔ Fastest
+
+---
+
+## Setting values example
+
+```js
+box.innerHTML = "<i>Hello</i>";     // Italic text
+box.innerText = "<i>Hello</i>";     // Shows: <i>Hello</i>
+box.textContent = "<i>Hello</i>";   // Shows: <i>Hello</i>
+```
+
+---
+
+## When to use what? (INTERVIEW TIP ⭐)
+
+| Use case          | Best choice   |
+| ----------------- | ------------- |
+| Insert HTML       | `innerHTML`   |
+| Show visible text | `innerText`   |
+| Safe text update  | `textContent` |
+
+---
+
+## One-line memory trick 🧠
+
+> **HTML → innerHTML
+> Visible → innerText
+> Raw text → textContent**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----- Here’s a **short, clear, interview-ready explanation** 👍
+
+---
+
+## ✅ What is **`localStorage`**?
+
+> **`localStorage` is a browser storage mechanism that allows you to store key–value data permanently in the user’s browser.**
+
+In simple words:
+👉 **Data stored in `localStorage` does NOT expire and remains even after page refresh or browser restart.**
+
+---
+
+## Key features
+
+* Stores data as **strings**
+* Storage limit ~ **5–10 MB**
+* Data is **domain-specific**
+* Available via `window.localStorage`
+
+---
+
+## Basic example
+
+### Store data
+
+```js
+localStorage.setItem("username", "Mahesh");
+```
+
+### Get data
+
+```js
+const name = localStorage.getItem("username");
+console.log(name); // Mahesh
+```
+
+### Remove data
+
+```js
+localStorage.removeItem("username");
+```
+
+### Clear all data
+
+```js
+localStorage.clear();
+```
+
+---
+
+## Storing objects (IMPORTANT ⚠️)
+
+```js
+const user = { name: "Mahesh", role: "admin" };
+
+localStorage.setItem("user", JSON.stringify(user));
+
+const data = JSON.parse(localStorage.getItem("user"));
+console.log(data.name);
+```
+
+---
+
+## `localStorage` vs `sessionStorage`
+
+| Feature       | localStorage | sessionStorage   |
+| ------------- | ------------ | ---------------- |
+| Lifetime      | Permanent    | Tab/session only |
+| Page refresh  | ✅ Stays      | ✅ Stays          |
+| Browser close | ✅ Stays      | ❌ Cleared        |
+| Storage size  | Larger       | Smaller          |
+
+---
+
+## Interview-ready one-liner ⭐
+
+> **`localStorage` is a browser API used to store persistent key–value data on the client side.**
+
+---
+
+## 🧠 Memory trick
+
+> **localStorage = long-term memory
+> sessionStorage = short-term memory**
+
+---
+
+## Important interview note ⚠️
+
+❌ Don’t store sensitive data (passwords, tokens without care)
+✔ Prefer secure cookies / HttpOnly tokens for auth
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----  ✅ What is **`sessionStorage`**?
+
+> **`sessionStorage` is a browser storage mechanism that stores key–value data for the duration of a single browser tab or session.**
+
+In simple words:
+👉 **Data stays until the tab is closed.**
+
+---
+
+## Key features
+
+* Stores data as **strings**
+* Data is **cleared when the tab/window is closed**
+* Data is **unique per tab**
+* Same API as `localStorage`
+
+---
+
+## Basic example
+
+### Store data
+
+```js
+sessionStorage.setItem("username", "Mahesh");
+```
+
+### Get data
+
+```js
+const name = sessionStorage.getItem("username");
+console.log(name); // Mahesh
+```
+
+### Remove data
+
+```js
+sessionStorage.removeItem("username");
+```
+
+### Clear all data
+
+```js
+sessionStorage.clear();
+```
+
+---
+
+## Storing objects (IMPORTANT ⚠️)
+
+```js
+const user = { name: "Mahesh", role: "admin" };
+
+sessionStorage.setItem("user", JSON.stringify(user));
+
+const data = JSON.parse(sessionStorage.getItem("user"));
+console.log(data.role);
+```
+
+---
+
+## `sessionStorage` vs `localStorage`
+
+| Feature       | sessionStorage   | localStorage           |
+| ------------- | ---------------- | ---------------------- |
+| Lifetime      | Until tab closes | Permanent              |
+| Page refresh  | ✅ Stays          | ✅ Stays                |
+| Browser close | ❌ Cleared        | ✅ Stays                |
+| Scope         | One tab only     | All tabs (same origin) |
+
+---
+
+## Interview-ready one-liner ⭐
+
+> **`sessionStorage` is a client-side storage API that stores data temporarily for the lifetime of a browser tab.**
+
+---
+
+## 🧠 Memory trick
+
+> **Session = tab life**
+
+---
+
+## Important interview note ⚠️
+
+❌ Don’t store sensitive data
+✔ Use for:
+
+* Form progress
+* Temporary UI state
+* Multi-step wizards
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----- Here’s the **shortest, interview-perfect answer** 👍
+
+---
+
+## ✅ Difference between **`localStorage`** and **`sessionStorage`**
+
+| Feature       | `localStorage`         | `sessionStorage`       |
+| ------------- | ---------------------- | ---------------------- |
+| Lifetime      | Permanent              | Until tab is closed    |
+| Page refresh  | ✅ Stays                | ✅ Stays                |
+| Browser close | ✅ Data remains         | ❌ Data cleared         |
+| Scope         | All tabs (same origin) | Only one tab           |
+| Storage size  | ~5–10 MB               | ~5 MB                  |
+| Use case      | Remember user settings | Temporary session data |
+
+---
+
+## Simple example
+
+```js
+localStorage.setItem("theme", "dark");     // stays forever
+sessionStorage.setItem("step", "2");       // cleared on tab close
+```
+
+---
+
+## Interview one-liner ⭐
+
+> **`localStorage` stores data permanently, while `sessionStorage` stores data only for the lifetime of a browser tab.**
+
+---
+
+## 🧠 Memory trick
+
+> **Local = long term
+> Session = tab life**
+
+---
+
+## Interview tip ⚠️
+
+❌ Don’t store sensitive data in either
+✔ Use secure cookies / server sessions for auth
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----  🍪 Cookies vs 🗂️ localStorage vs 🧭 sessionStorage
+
+### ✅ Cookies
+
+> **Cookies are small pieces of data stored by the browser and automatically sent to the server with every HTTP request.**
+
+**Key points:**
+
+* Sent with every request (request headers)
+* Can have expiry time
+* Can be **HttpOnly & Secure** (more secure)
+* Small size (~4 KB)
+
+**Example:**
+
+```js
+document.cookie = "user=Mahesh; expires=Fri, 31 Dec 2026 12:00:00 UTC;";
+```
+
+**Used for:**
+
+* Authentication
+* Sessions
+* Tracking (login, preferences)
+
+---
+
+### ✅ localStorage
+
+> **Stores data permanently in the browser (client-side only).**
+
+**Key points:**
+
+* NOT sent to server automatically
+* Large storage (~5–10 MB)
+* Stays even after browser close
+
+```js
+localStorage.setItem("theme", "dark");
+```
+
+**Used for:**
+
+* Theme
+* User preferences
+* Offline data
+
+---
+
+### ✅ sessionStorage
+
+> **Stores data temporarily for one browser tab.**
+
+**Key points:**
+
+* Cleared when tab is closed
+* NOT shared across tabs
+
+```js
+sessionStorage.setItem("step", "2");
+```
+
+**Used for:**
+
+* Multi-step forms
+* Temporary UI state
+
+---
+
+## 🔍 Interview Comparison Table ⭐
+
+| Feature          | Cookies            | localStorage | sessionStorage  |
+| ---------------- | ------------------ | ------------ | --------------- |
+| Sent to server   | ✅ Yes              | ❌ No         | ❌ No            |
+| Storage size     | ~4 KB              | ~5–10 MB     | ~5 MB           |
+| Lifetime         | Set by expiry      | Permanent    | Tab lifetime    |
+| Security options | ✅ HttpOnly, Secure | ❌ No         | ❌ No            |
+| Best for         | Auth & sessions    | Preferences  | Temporary state |
+
+---
+
+## 🎯 Interview one-liner (VERY IMPORTANT)
+
+> **Cookies are used for server communication and authentication, while localStorage and sessionStorage are client-side storage mechanisms for persisting data in the browser.**
+
+---
+
+## 🧠 Memory trick
+
+> **Cookies → server
+> localStorage → long term
+> sessionStorage → tab life**
+
+---
+
+## ⚠️ Interview warning (say this confidently)
+
+❌ Don’t store passwords or sensitive data in localStorage/sessionStorage
+✅ Use **HttpOnly cookies** for auth tokens
+
+

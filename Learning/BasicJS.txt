@@ -630,7 +630,8 @@ function initApp() {
 }
 function loadUser() {
   console.log("User loaded");
-}
+} 
+
 
 
 Historical & Backward Compatibility

@@ -216,22 +216,22 @@ Great question 👍 Arrays are **one of the most frequently asked** topics in in
   * `pop()` → remove from end
   * `shift()` → remove from start
   * `unshift()` → add to start
+
 * **Iteration**
-
   * `for`, `for…of`, `forEach()`, `map()`
-* **Transformation**
 
+* **Transformation**
   * `map()` → transform elements
   * `filter()` → filter elements
   * `reduce()` → accumulate to single value
+
 * **Searching**
-
   * `indexOf()`, `includes()`, `find()`
+
 * **Sorting**
-
   * `sort()`, `reverse()`
+  
 * **Others**
-
   * `slice()`, `splice()`, `concat()`, `flat()`
 
 👉 Example:
