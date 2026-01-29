@@ -62,3 +62,67 @@ New Questions from Revision
 2. what is a documnet , window , etc 
 3. Rest & Spread
 5. diff in async await & prmosises 
+
+
+
+
+Sagar's Questions:
+1. What is JavaScript and where is it used?
+2. What are the different data types in JavaScript?
+3. Difference between `var`, `let`, and `const`
+4. What is the difference between `null` and `undefined`?
+5. What is `NaN`?
+6. What is type coercion?
+7. Difference between `==` and `===`
+8. What is hoisting?
+9. What are truthy and falsy values?
+10. What does the `typeof` operator do?
+11. What is scope in JavaScript?
+12. What is block scope?
+13. What is lexical scope?
+14. What is a closure?
+15. What is an execution context?
+16. What is the call stack?
+17. What is the difference between function declaration and function expression?
+18. What are arrow functions?
+19. How is `this` keyword used in JavaScript?
+20. What is an IIFE?
+21. What is a callback function?
+22. What is a higher-order function?
+23. What is synchronous and asynchronous JavaScript?
+24. What is `setTimeout()`?
+25. What is a Promise?
+26. What are the states of a Promise?
+27. Difference between callbacks and promises
+28. What is `async` and `await`?
+29. What is the event loop?
+30. What are microtasks and macrotasks?
+31. What is the DOM?
+32. How is the DOM different from HTML?
+33. Difference between `getElementById` and `querySelector`
+34. What is event bubbling?
+35. What is event capturing?
+36. What is event delegation?
+37. How do you prevent default browser behavior?
+38. Difference between `innerHTML`, `innerText`, and `textContent`
+39. What is `localStorage`?
+40. What is `sessionStorage`?
+41. Difference between `localStorage` and `sessionStorage`
+42. What is an array and how is it different from an object?
+43. What is object destructuring?
+44. What is the spread operator?
+45. Difference between shallow copy and deep copy 
+46. What are ES6 features?
+47. What are template literals?
+48. What are default parameters?
+49. What are JavaScript modules?
+50. Difference between `export` and `export default`
+51. What is optional chaining?
+52. What is the nullish coalescing operator?
+53. What is error handling in JavaScript?
+54. What is `try...catch`?
+55. What is the `finally` block?
+56. How do you debug JavaScript code?
+57. What happens if you declare a variable without `var`, `let`, or `const`?
+58. How does JavaScript manage memory?
+59. What is garbage collection?
